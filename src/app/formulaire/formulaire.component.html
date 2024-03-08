@@ -1,0 +1,92 @@
+<div class="d-flex justify-content-center align-items-center vh-100" >
+    
+  <form [formGroup]="carbonFootPrintForm" (ngSubmit)="onSubmit()" class="card p-3 shadow" >
+    <div class="row justify-content-center mt-3">
+      <div class="col-auto">
+          <!-- Logo Image -->
+          <img src="../../assets/images/fingerprint.png" alt="..." class="img-fluid">
+          <!-- Design de traces de doigt (fingerprint) sous le logo -->  
+      </div>
+  </div>
+    <div class="form-group">
+      <label for="client">Client</label>
+      <p-autoComplete class="form-control" formControlName="client" [(ngModel)]="selectedCountry" [forceSelection]="true" [suggestions]="filtredClients" (completeMethod)="filterClients($event)" field="name"></p-autoComplete>
+    </div>
+    <div class="form-group">
+      <label for="presenceDays">Nombre de jours de présence sur site par semaine:</label>
+      <input type="number" class="form-control" id="presenceDays" formControlName="presenceDays" min="0" max="7">
+    </div>
+
+    <div class="form-group">
+      <label for="transportationMode">Moyen de locomotion pour aller sur site:</label>
+      <select class="form-control" id="transportationMode" formControlName="transportationMode">
+        <option value="Bus">Bus</option>
+        <option value="Metro">Métro</option>
+        <option value="Velo">Vélo</option>
+        <option value="Moto">Moto</option>
+        <option value="Scooter">Scooter</option>
+        <option value="Trotinette">Trottinette</option>
+        <option value="Voiture">Voiture</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="distanceKm">Distance parcourue en KM:</label>
+      <input type="number" class="form-control" id="distanceKm" formControlName="distanceKm" min="0" max="1000">
+    </div>
+
+    <div class="form-group">
+      <div>Type d'habitation:</div>
+      <div class="row">
+        <div class="col">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" id="appartement" name="housingType" formControlName="housingType" value="Appartement">
+            <label class="form-check-label" for="appartement">Appartement</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" id="maison" name="housingType" formControlName="housingType" value="Maison">
+            <label class="form-check-label" for="maison">Maison</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+    <div formGroupName="homeEquipment" class="form-group">
+      <label>Équipement utilisé à la maison :</label>
+      <div class="row">
+        <div class="col-md-6">
+          <label for="laptop">Ordinateur portable:</label>
+          <input type="number" class="form-control" id="laptop" formControlName="laptop" value="0" min="0" max="20">
+        </div>
+        <div class="col-md-6">
+          <label for="desktopComputer">Ordinateur Fixe:</label>
+          <input type="number" class="form-control" id="desktopComputer" formControlName="desktopComputer" value="0" min="0" max="20">
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <label for="monitor">Écran:</label>
+          <input type="number" class="form-control" id="monitor" formControlName="monitor" value="0" min="0" max="20">
+        </div>
+        <div class="col-md-6">
+          <label for="phone">Téléphone:</label>
+          <input type="number" class="form-control" id="phone" formControlName="phone" value="0" min="0" max="20">
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="form-group">
+      <label for="heatingType">Chauffage:</label>
+      <select class="form-control" id="heatingType" formControlName="heatingType">
+       <option *ngFor="let type of heatingTypes" [value]="type">{{ type }}</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Soumettre</button>
+  </form>
+  </div>
+
+  <app-thank-you-modal *ngIf="showThankYouModal" (closeModal)="onModalClose()"></app-thank-you-modal>

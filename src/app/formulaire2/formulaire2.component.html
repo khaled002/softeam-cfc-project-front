@@ -1,0 +1,87 @@
+<main class="container">
+    <h1>Calculateur d'empreinte <span style="display: block;">CO<sub>2</sub></span></h1>
+    <form [formGroup]="carbonFootPrintForm" (ngSubmit)="onSubmit()">
+
+        <!--<mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Clients</mat-label>
+            <input type="text" 
+                   placeholder="Pick one" 
+                   aria-label="Number" 
+                   matInput 
+                   formControlName="client"
+                   [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let c of filteredClients | async" [value]="c">
+                {{ c }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        -->
+
+        <label for="clients">Client:</label>
+        <select id="clients" name="client" required formControlName="client"  [class.invalid]="heatingTypeControl?.invalid && heatingTypeControl?.touched">
+            <option *ngFor="let c of clients" [value]="c">{{ c }}</option>
+        </select>
+        <label for="days-site">Nombre de jours de présence sur site par semaine:</label>
+        <input type="number"  id="days-site" name="days-site" required min="0" formControlName="presenceDays" [class.invalid]="presenceControl?.invalid && presenceControl?.touched">
+
+        <label for="transport">Moyen de locomotion pour aller sur site:</label>
+        <select id="transport" name="transport" formControlName="transportationMode" [class.invalid]="transportationModeControl?.invalid && transportationModeControl?.touched">
+            <option value="car">Voiture</option>
+            <option value="public-transport">Transports en commun</option>
+            <option value="bike">Vélo</option>
+            <option value="walk">Marche</option>
+        </select>
+
+        <label for="distance">Distance parcourue en KM:</label>
+        <input type="number" id="distance" name="distance" required min="0.5" formControlName="distanceKm" [class.invalid]="distanceControl?.invalid && distanceControl?.touched">
+
+        <div class="radio-group">
+            <div>
+                <label>Type d'habitation:</label>
+                <label><input type="radio" name="housingType" value="apartment" required formControlName="housingType" [class.invalid]="housingTypeControl?.invalid && housingTypeControl?.touched"> Appartement</label>
+                <label><input type="radio" name="housingType" value="house" formControlName="housingType"  [class.invalid]="housingTypeControl?.invalid && housingTypeControl?.touched"> Maison</label>
+            </div>
+        </div>
+
+        <label for="laptop">Ordinateur portable:</label>
+        <select id="laptop" name="laptop" formControlName="laptop" [class.invalid]="lapTopControl?.invalid && lapTopControl?.touched">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+
+        <label for="desktop">Ordinateur Fixe:</label>
+        <select id="desktop" name="desktop" formControlName="desktopComputer" [class.invalid]="desktopControl?.invalid && desktopControl?.touched" >
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+
+        <label for="screen">Écran:</label>
+        <select id="screen" name="screen" formControlName="monitor"  [class.invalid]="monitorControl?.invalid && monitorControl?.touched">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+
+        <label for="phone">Téléphone:</label>
+        <select id="phone" name="phone" formControlName="phone"  [class.invalid]="phoneControl?.invalid && phoneControl?.touched">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+
+        <label for="heating">Chauffage:</label>
+        <select id="heating" name="heatingType" required formControlName="heatingType"  [class.invalid]="heatingTypeControl?.invalid && heatingTypeControl?.touched">
+            <option *ngFor="let type of heatingTypes" [value]="type">{{ type }}</option>
+        </select>
+        <!-- Form inputs remain the same -->
+        <input type="submit" value="Soumettre" class="btn-submit">
+        <small class="p-error" *ngIf="!carbonFootPrintForm.valid">* Tous les champs sont obligatoires.</small>
+    </form>
+</main>

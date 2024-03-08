@@ -1,0 +1,175 @@
+
+<div class="d-flex justify-content-center align-items-center">
+    
+    <div class="grid">
+        <div class="col-12 lg:col-4">
+   <div class="card">
+    <div class="mb-4 text-center">
+                <h1>Dashboard d'Administration  </h1>
+        </div>
+    <div class="mb-4 text-center line-height-3">
+     <h3>Vous pouvez, à partir des données ci-dessous, sélectionner, ajouter ou modifier les destinataires de votre enquête.</h3>
+    </div>
+    <div class="field col-12 md:col-6">
+        <div class="row justify-content-center align-content-center">
+    
+            <div class="col-auto">
+                <!-- Logo Image -->
+                <img src="../../assets/images/fingerprint.png" alt="..." class="img-fluid">
+                <!-- Design de traces de doigt (fingerprint) sous le logo -->
+                
+            </div>
+        </div>
+    </div>
+        <p-toast></p-toast>
+        <p-toolbar styleClass="mb-4 gap-2">
+            <ng-template pTemplate="left">
+                
+                
+                <div class ="mx-3">
+                <button pButton pRipple label="Nouveau" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                </div>
+                
+                <div >
+                <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedCollaborateurs()" [disabled]="!selectedCollabs || !selectedCollabs.length"></button>
+                </div>
+                
+                </ng-template>
+    
+            <ng-template pTemplate="right">
+                
+                <p-button  pRipple label="Envoyer" (click)="send()"  icon="pi pi-send" class="p-button-help" [disabled]="!selectedCollabs || !selectedCollabs.length"></p-button>
+            </ng-template>
+            
+       
+
+            
+        </p-toolbar>
+    
+        <p-table
+            #dt
+            [value]="collaborateurs"
+            [rows]="5"
+            [paginator]="true"
+            [globalFilterFields]="['nom', 'prenom', 'uniteCommerciale']"
+            [tableStyle]="{ 'min-width': '75rem' }"
+            [(selection)]="selectedCollabs"
+            [rowHover]="true"
+            dataKey="id"
+            currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} entrées"
+            [showCurrentPageReport]="true"
+        >
+            
+            <ng-template pTemplate="caption">
+                <div class="flex align-items-center justify-content-between">
+                    
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Recherche..." />
+                    </span>
+                    
+
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 4rem">
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
+                    <th pSortableColumn="Nom" style="min-width:15rem">Nom <p-sortIcon field="nom"></p-sortIcon></th>
+                    <th pSortableColumn="Prenom" style="min-width:15rem">Prenom <p-sortIcon field="prenom"></p-sortIcon></th>
+                    <th pSortableColumn="uniteCommerciale" style="min-width:10rem">Unité Commerciale <p-sortIcon field="uniteCommerciale"></p-sortIcon></th>
+                    <th >Email </th>
+                    
+                    
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-collaborateur>
+                <tr>
+                    <td>
+                        <p-tableCheckbox [value]="collaborateur"></p-tableCheckbox>
+                    </td>
+                    <td>{{ collaborateur.nom }}</td>
+                    <td>{{ collaborateur.prenom }}</td>
+                    <td>{{ collaborateur.uniteCommerciale }}</td>
+                    <td>{{ collaborateur.email }}</td>
+                    
+                   
+                    <td>
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editCollaborateur(collaborateur)"></button>
+                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteCollaborateur(collaborateur)"></button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="summary">
+                <div class="flex align-items-center justify-content-between">En totalité il y a  {{ collaborateurs ? collaborateurs.length : 0 }} collaborateurs enregistrés</div>
+            </ng-template>
+        </p-table>
+    </div>
+
+    </div>
+    </div>
+    </div>
+
+
+
+
+    <p-dialog [(visible)]="collaborateurDialog" [style]="{ width: '450px' }" header="Détails du collaborateur" [modal]="true" styleClass="p-fluid">
+        <ng-template pTemplate="content">
+            <div class="field">
+                <label for="nom">Nom</label>
+                <input type="text" pInputText id="nom" [(ngModel)]="collaborateur.nom" required autofocus />
+                <small class="p-error" *ngIf="submitted && !collaborateur.nom">le nom est obligatoire.</small>
+            </div>
+            <div class="field">
+                <label for="prenom">Prénom</label>
+                <input type="text" pInputText id="prenom" [(ngModel)]="collaborateur.prenom" required autofocus />
+                <small class="p-error" *ngIf="submitted && !collaborateur.prenom">le prénom est obligatoire.</small>
+            </div>
+            <div class="field">
+                <label for="email">Email</label>
+                <input type="email" pInputText id="email" [(ngModel)]="collaborateur.email" required autofocus [disabled]="disableEmail" />
+                <small class="p-error" *ngIf="submitted && !collaborateur.email">l'email est obligatoire.</small>               
+                <small class="p-error" *ngIf="submitted && collaborateur.email && !validEmail()">l'email est incorrecte.</small>               
+            </div>         
+            <div class="field">
+                <label class="mb-3">Business Unit</label>
+                <div class="formgrid grid">
+                    <div class="field-radiobutton col-6">
+                        <p-radioButton id="bu1" name="digital" value="Digital" [(ngModel)]="collaborateur.uniteCommerciale"></p-radioButton>
+                        <label for="bu1">Digital</label>
+                    </div>
+                    <div class="field-radiobutton col-6">
+                        <p-radioButton id="bu2" name="finance" value="Finace" [(ngModel)]="collaborateur.uniteCommerciale"></p-radioButton>
+                        <label for="bu2">Finance</label>
+                    </div>
+                    <div class="field-radiobutton col-6">
+                        <p-radioButton id="bu3" name="data" value="Data" [(ngModel)]="collaborateur.uniteCommerciale"></p-radioButton>
+                        <label for="bu3">Data</label>
+                    </div>
+                    <div class="field-radiobutton col-6">
+                        <p-radioButton id="bu4" name="consulting" value="Consulting" [(ngModel)]="collaborateur.uniteCommerciale"></p-radioButton>
+                        <label for="bu4">Consulting</label>
+                    </div>
+                </div>
+                <small class="p-error" *ngIf="submitted && !collaborateur.uniteCommerciale">Unité Commerciale est obligatoire.</small>
+            </div>
+
+        </ng-template>
+    
+        <ng-template pTemplate="footer">
+            <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+            <button pButton pRipple label="Enregistrer" icon="pi pi-check" class="p-button-text" (click)="saveCollaborateur()"></button>
+        </ng-template>
+    </p-dialog>
+    
+    <p-confirmDialog #cd [style]="{ width: '450px' }">
+        <ng-template pTemplate="footer">
+            <button type="button" pButton icon="pi pi-times" label="Non" (click)="cd.reject()" ></button>
+            <button type="button" pButton icon="pi pi-check" label="Oui" (click)="cd.accept()"></button>
+        </ng-template>
+    </p-confirmDialog>
+ 
+
+    

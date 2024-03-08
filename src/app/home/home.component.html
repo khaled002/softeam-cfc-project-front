@@ -1,0 +1,27 @@
+<div class="d-flex justify-content-center align-items-center vh-100" style="min-height: 100vh;">
+    <div class="row">
+        
+            
+            <form [formGroup]="surveyForm" (ngSubmit)="onSubmit()" class='card p-3 shadow form-inline justify-content-center'>
+            <h2 class="text-center mb-4">Merci d'avoir pris le temps de répondre à ce sondage</h2>
+            <div class="row justify-content-center mt-3">
+                <div class="col-auto">
+                    <!-- Logo Image -->
+                    <img src="../../assets/images/fingerprint.png" alt="..." class="img-fluid">
+                    <!-- Design de traces de doigt (fingerprint) sous le logo -->
+                    
+                </div>
+            </div>
+            
+                <div class="form-group mr-2">
+                    <label for="email">Votre adresse email :</label>
+                    <input type="email" id="email" class="form-control" formControlName="email" placeholder="Entrez votre email Softeam">
+                    
+                </div>
+                <button type="submit" class="btn btn-primary">Soumettre</button>
+            
+
+            </form>
+        
+    </div>
+</div>

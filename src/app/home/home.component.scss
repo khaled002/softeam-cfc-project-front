@@ -1,0 +1,67 @@
+
+/* Centrer le formulaire et définir son style */
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Utiliser la totalité de la hauteur de la fenêtre */
+    padding: 20px; /* Ajouter un peu de padding autour pour ne pas coller aux bords */
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); /* Effet d'ombre */
+   
+  }
+  
+  
+  input, select {
+    padding: 10px; /* Ajouter du padding dans les champs pour faciliter la saisie */
+    border: 1px solid #ccc; /* Bordure subtile pour les champs */
+    border-radius: 4px; /* Bords arrondis */
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: #007bff; /* Couleur de fond pour le bouton */
+    color: white; /* Texte blanc pour le bouton */
+    border: none; /* Pas de bordure pour le bouton */
+    cursor: pointer; /* Changement du curseur pour indiquer la possibilité de cliquer */
+    border-radius: 4px; /* Bords arrondis pour le bouton */
+  }
+  
+  button:hover {
+    background-color: #0056b3; /* Assombrir le bouton au survol pour un feedback visuel */
+  }
+  
+  
+  .equipment-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Deux colonnes de même taille */
+    gap: 10px; /* Espacement entre les champs */
+  }
+  
+  .equipment-grid > div {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  input.ng-touched.ng-invalid,
+  select.ng-touched.ng-invalid {
+    border: 1px solid red;
+  }
+  
+  .fingerprint {
+    background-image: url('../../assets/images/fingerprint.png');
+    background-size: cover;
+    background-position: center; 
+    height: 100%; 
+    width: 100%; 
+}

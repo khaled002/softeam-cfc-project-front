@@ -1,0 +1,37 @@
+.container {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 2em;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 0 auto;
+    padding-bottom: 3em;
+}
+h1 {
+    text-align: center; /* Center align the title */
+}
+input, select, .radio-group {
+    margin-bottom: 20px;
+}
+.radio-group {
+    display: flex;
+    justify-content: space-between;
+}
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+.btn-submit {
+    background-color: #005f73;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.btn-submit:hover {
+    background-color: #0a9396;
+}
+
+.invalid {
+    border: 1px solid red;
+  }
