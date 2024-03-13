@@ -47,8 +47,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
    imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
     AccordionModule,
     AutoCompleteModule,
     BreadcrumbModule,
@@ -93,8 +91,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CardModule
     ],
     exports: [
-        BrowserModule,
-        BrowserAnimationsModule,
         AccordionModule,
         AutoCompleteModule,
         BreadcrumbModule,

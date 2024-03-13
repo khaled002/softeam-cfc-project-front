@@ -32,12 +32,17 @@ emailDomainValidator(domainName: string): ValidatorFn {
   }
 
   onSubmit() {
-    if(this.surveyForm.valid){
-      console.log(this.surveyForm.get('email')?.value);
-    this.submissionStateService.setFormSubmitted(true); // Marque le formulaire comme soumis
-    this.router.navigate(['softeam/carbon-foot-print/form']); // Redirige vers la page protégée
+    // if(this.surveyForm.valid){
+    //   this.submissionStateService.setFormSubmitted(true); // Marque le formulaire comme soumis
+    //   console.log(this.surveyForm.get('email')?.value);
+    // this.router.navigate(['softeam/carbon-foot-print/form']); // Redirige vers la page protégée
     
-    }
+    // } else {
+    //   this.surveyForm.get('email')?.markAsTouched();
+    // }
+
+    this.submissionStateService.setFormSubmitted(true); 
+    this.router.navigate(['softeam/carbon-foot-print/form']);
   }
 
 }

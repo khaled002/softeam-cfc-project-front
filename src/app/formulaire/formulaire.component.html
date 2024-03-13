@@ -1,92 +1,95 @@
-<div class="d-flex justify-content-center align-items-center vh-100" >
-    
-  <form [formGroup]="carbonFootPrintForm" (ngSubmit)="onSubmit()" class="card p-3 shadow" >
-    <div class="row justify-content-center mt-3">
-      <div class="col-auto">
-          <!-- Logo Image -->
-          <img src="../../assets/images/fingerprint.png" alt="..." class="img-fluid">
-          <!-- Design de traces de doigt (fingerprint) sous le logo -->  
-      </div>
-  </div>
-    <div class="form-group">
-      <label for="client">Client</label>
-      <p-autoComplete class="form-control" formControlName="client" [(ngModel)]="selectedCountry" [forceSelection]="true" [suggestions]="filtredClients" (completeMethod)="filterClients($event)" field="name"></p-autoComplete>
-    </div>
-    <div class="form-group">
-      <label for="presenceDays">Nombre de jours de présence sur site par semaine:</label>
-      <input type="number" class="form-control" id="presenceDays" formControlName="presenceDays" min="0" max="7">
-    </div>
+<main class="container">
+    <h1>Calculateur d'empreinte <span style="display: block;">CO<sub>2</sub></span></h1>
+    <form [formGroup]="carbonFootPrintForm" (ngSubmit)="onSubmit()">
 
-    <div class="form-group">
-      <label for="transportationMode">Moyen de locomotion pour aller sur site:</label>
-      <select class="form-control" id="transportationMode" formControlName="transportationMode">
-        <option value="Bus">Bus</option>
-        <option value="Metro">Métro</option>
-        <option value="Velo">Vélo</option>
-        <option value="Moto">Moto</option>
-        <option value="Scooter">Scooter</option>
-        <option value="Trotinette">Trottinette</option>
-        <option value="Voiture">Voiture</option>
-      </select>
-    </div>
+        <div class="flex row">
+            <div class=" col-6 flex-auto">
+                <label for="clients" class="font-bold"> Client: </label>
+                <p-dropdown id="clients" name="client" formControlName="client"
+                    [class.invalid]="heatingTypeControl?.invalid && heatingTypeControl?.touched" [options]="clients"
+                    optionLabel="label" placeholder="Select a client"></p-dropdown>
+            </div>
+            <div class="flex-auto col-6">
+                <label for="days-site" class="font-bold">Nombre de jours de présence sur site par semaine:</label>
+                <p-inputNumber id="days-site" mode="decimal" formControlName="presenceDays"
+                    [class.invalid]="presenceControl?.invalid && presenceControl?.touched"> </p-inputNumber>
+            </div>
+        </div>
 
-    <div class="form-group">
-      <label for="distanceKm">Distance parcourue en KM:</label>
-      <input type="number" class="form-control" id="distanceKm" formControlName="distanceKm" min="0" max="1000">
-    </div>
+        <div class="flex row">
+            <div class="flex-auto col-6">
+                <label for="transport" class="font-bold">Moyen de locomotion pour aller sur site:</label>
+                <p-dropdown id="transport" name="transport" formControlName="transportationMode"
+                    [class.invalid]="transportationModeControl?.invalid && transportationModeControl?.touched"
+                    [options]="meansOfTransportaion" optionLabel="label"
+                    placeholder="Selectionner un mode de transport"></p-dropdown>
+            </div>
 
-    <div class="form-group">
-      <div>Type d'habitation:</div>
-      <div class="row">
-        <div class="col">
-          <div class="form-check">
-            <input class="form-check-input" type="radio" id="appartement" name="housingType" formControlName="housingType" value="Appartement">
-            <label class="form-check-label" for="appartement">Appartement</label>
-          </div>
+            <div class="flex-auto col-6">
+                <label for="distance" class="font-bold">Distance parcourue en KM:</label>
+                <p-inputNumber id="distance" name="distance" formControlName="distanceKm"
+                    [class.invalid]="distanceControl?.invalid && distanceControl?.touched"></p-inputNumber>
+            </div>
         </div>
-        <div class="col">
-          <div class="form-check">
-            <input class="form-check-input" type="radio" id="maison" name="housingType" formControlName="housingType" value="Maison">
-            <label class="form-check-label" for="maison">Maison</label>
-          </div>
-        </div>
-      </div>
-    </div>
-    
 
-    <div formGroupName="homeEquipment" class="form-group">
-      <label>Équipement utilisé à la maison :</label>
-      <div class="row">
-        <div class="col-md-6">
-          <label for="laptop">Ordinateur portable:</label>
-          <input type="number" class="form-control" id="laptop" formControlName="laptop" value="0" min="0" max="20">
+        <div class="flex row">
+            <div class="flex-auto col-6">
+                <label class="font-bold">Type d'habitation:</label>
+                <div class="flex align-items-center mb-2">
+                    <p-checkbox label="Appartement" name="housingType" value="apartment" formControlName="housingType"
+                        [class.invalid]="housingTypeControl?.invalid && housingTypeControl?.touched"></p-checkbox>
+                </div>
+                <div class="flex align-items-center">
+                    <p-checkbox label="Maison" name="housingType" value="house" formControlName="housingType"
+                        [class.invalid]="housingTypeControl?.invalid && housingTypeControl?.touched"></p-checkbox>
+                </div>
+            </div>
+            <div class="flex-auto col-6">
+                <label for="heating" class="font-bold">Chauffage:</label>
+                <p-dropdown id="heating" name="heatingType" formControlName="heatingType"
+                    [class.invalid]="heatingTypeControl?.invalid && heatingTypeControl?.touched"
+                    [options]="heatingTypes" optionLabel="label" placeholder="Type de chauffage"></p-dropdown>
+            </div>
         </div>
-        <div class="col-md-6">
-          <label for="desktopComputer">Ordinateur Fixe:</label>
-          <input type="number" class="form-control" id="desktopComputer" formControlName="desktopComputer" value="0" min="0" max="20">
-        </div>
-      </div>
-      <div class="row mt-3">
-        <div class="col-md-6">
-          <label for="monitor">Écran:</label>
-          <input type="number" class="form-control" id="monitor" formControlName="monitor" value="0" min="0" max="20">
-        </div>
-        <div class="col-md-6">
-          <label for="phone">Téléphone:</label>
-          <input type="number" class="form-control" id="phone" formControlName="phone" value="0" min="0" max="20">
-        </div>
-      </div>
-    </div>
-    
 
-    <div class="form-group">
-      <label for="heatingType">Chauffage:</label>
-      <select class="form-control" id="heatingType" formControlName="heatingType">
-       <option *ngFor="let type of heatingTypes" [value]="type">{{ type }}</option>
-      </select>
-    </div>
-    <button type="submit" class="btn btn-primary">Soumettre</button>
-  </form>
-  </div>
+        <div class="flex row">
+            <div class="flex-auto col">
+                <label for="laptop" class="font-bold">Ordinateur portable:</label>
+                <p-dropdown id="laptop" name="laptop" formControlName="laptop"
+                    [class.invalid]="lapTopControl?.invalid && lapTopControl?.touched" [options]="quantity"
+                    optionLabel="label" placeholder="Selectionne un nombre"></p-dropdown>
+            </div>
 
-  <app-thank-you-modal *ngIf="showThankYouModal" (closeModal)="onModalClose()"></app-thank-you-modal>
+            <div class="flex-auto col">
+                <label for="laptop" class="font-bold">Ordinateur portable:</label>
+                <p-dropdown id="laptop" name="laptop" formControlName="laptop"
+                    [class.invalid]="lapTopControl?.invalid && lapTopControl?.touched" [options]="quantity"
+                    optionLabel="label" placeholder="Selectionne un nombre"></p-dropdown>
+            </div>
+        </div>
+
+        <div class="flex row">
+            <div class="flex-auto col">
+                <label for="screen" class="font-bold">Écran:</label>
+                <p-dropdown id="screen" name="screen" formControlName="monitor"
+                    [class.invalid]="monitorControl?.invalid && monitorControl?.touched" [options]="quantity"
+                    optionLabel="label" placeholder="Selectionne un nombre"></p-dropdown>
+            </div>
+
+            <div class="flex-auto col">
+                <label for="phone" class="font-bold">Téléphone:</label>
+                <p-dropdown id="phone" name="phone" formControlName="phone"
+                    [class.invalid]="phoneControl?.invalid && phoneControl?.touched" [options]="quantity"
+                    optionLabel="label" placeholder="Selectionne un nombre"></p-dropdown>
+            </div>
+        </div>
+
+        <!-- Form inputs remain the same -->
+        <div class="mt-4">
+            <p-button type="submit" label="Soumettre" class="flex justify-content-center mb-2"></p-button>
+            <div class="flex justify-content-center">
+                <small class="p-error" *ngIf="!carbonFootPrintForm.valid">* Tous les champs sont obligatoires.</small>
+            </div>
+        </div>
+    </form>
+</main>

@@ -4,7 +4,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { primeComponentsModule } from './shared/prime-components.module';
 import { FormulaireComponent } from './formulaire/formulaire.component';
-import { Formulaire2Component } from './formulaire2/formulaire2.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeComponent } from './home/home.component';
 import { ThankYouModalComponent } from './thank-you-modal/thank-you-modal.component';
@@ -19,8 +18,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FormulaireComponent,
     ThankYouModalComponent,
     HomeComponent,
-    DashboardComponent,
-    Formulaire2Component
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

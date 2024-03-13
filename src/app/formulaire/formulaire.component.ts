@@ -1,34 +1,55 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl,Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CollaborateurService } from '../services/collaborateur.service';
 import { ClientService } from '../services/client.service';
+import { CollaborateurService } from '../services/collaborateur.service';
+import { Observable } from 'rxjs/internal/Observable';
+import { startWith } from 'rxjs/internal/operators/startWith';
+import { map } from 'rxjs/internal/operators/map';
 import { HeatingType } from '../core/enums/HeatingType';
-
 
 @Component({
   selector: 'app-formulaire',
   templateUrl: './formulaire.component.html',
   styleUrls: ['./formulaire.component.scss']
 })
-export class FormulaireComponent implements OnInit {
+export class FormulaireComponent {
 
   showThankYouModal: boolean = false;
-
   clients : any[]= [];
-
   selectedCountry : any[] = [];
-  filtredClients : any[] = [];
+  filteredClients!: Observable<any[]>;
+  heatingTypes = Object.values(HeatingType).map((o :string)=> ({label: o, value: o}));
+  meansOfTransportaion = [
+    {label: "Voiture", value: "car"},
+    {label: "Transports en commun", value: "public-transport"},
+    {label: "Vélo", value: "bike"},
+    {label: "Marche", value: "walk"},
+  ];
+  quantity = [
+    {label: "0", value: "0"},
+    {label: "1", value: "1"},
+    {label: "2", value: "2"},
+    {label: "3", value: "3"},
+  ]
 
-  heatingTypes = Object.values(HeatingType);
-
-  constructor(private router: Router,private collaborateurService: CollaborateurService, private clientService: ClientService ) {}
+  constructor(private router: Router,private collaborateurService: CollaborateurService, private clientService: ClientService ) {
+   
+  }
   ngOnInit(): void {
     this.clientService.getClientsList().subscribe({
       next: (data) => {
-        this.clients = data;
+        this.clients = data.map((client :string)=> ({label: client, value: client}))
       }
     });
+
+    if(this.clientControl)
+    {
+    this.filteredClients = this.clientControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value?? ''))
+    );
+    }
   }
 
   carbonFootPrintForm = new FormGroup({
@@ -36,13 +57,11 @@ export class FormulaireComponent implements OnInit {
     presenceDays: new FormControl('', [Validators.required,Validators.min(0), Validators.max(7)]),
     transportationMode: new FormControl('', Validators.required), 
     distanceKm: new FormControl('', [Validators.required,Validators.min(0), Validators.max(1000)]), // Exemple : max 1000km pour la distance
-    housingType: new FormControl('', Validators.required),
-      homeEquipment: new FormGroup({
-      laptop: new FormControl(0, [Validators.required,Validators.min(0), Validators.max(5)]), // Exemple : 0 à 5 laptops
-      desktopComputer: new FormControl(0, [Validators.required,Validators.min(0), Validators.max(5)]),
-      monitor: new FormControl(0, [Validators.required,Validators.min(0), Validators.max(5)]),
-      phone: new FormControl(0, [Validators.required,Validators.min(0), Validators.max(5)])
-    }),
+    housingType: new FormControl('', Validators.required), 
+    laptop: new FormControl(0, [Validators.required,Validators.min(0), Validators.max(5)]), // Exemple : 0 à 5 laptops
+    desktopComputer: new FormControl(0, [Validators.required,Validators.min(0), Validators.max(5)]),
+    monitor: new FormControl(0, [Validators.required,Validators.min(0), Validators.max(5)]),
+    phone: new FormControl(0, [Validators.required,Validators.min(0), Validators.max(5)]),
     heatingType: new FormControl('',Validators.required)
   });
 
@@ -78,20 +97,21 @@ export class FormulaireComponent implements OnInit {
     }, 30);
   }
 
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
 
-  filterClients(event: { query: any; }) {
-    let filtered: any[] = [];
-    let query = event.query;
+    return this.clients.filter(option => option.name.toLowerCase().includes(filterValue));
+  }
 
-    for (let i = 0; i < this.clients.length; i++) {
-        let client = this.clients[i];
-        if (client.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-            filtered.push(client);
-        }
-    }
+get clientControl() { return this.carbonFootPrintForm.get('client');}
+get presenceControl() {return this.carbonFootPrintForm.get('presenceDays')}
+get transportationModeControl() {return this.carbonFootPrintForm.get('transportationMode')}
+get distanceControl() {return this.carbonFootPrintForm.get('distanceKm')}
+get housingTypeControl(){return this.carbonFootPrintForm.get('housingType')}
+get lapTopControl(){return this.carbonFootPrintForm.get('laptop')}
+get monitorControl(){return this.carbonFootPrintForm.get('monitor')}
+get desktopControl(){return this.carbonFootPrintForm.get('desktopComputer')}
+get phoneControl(){return this.carbonFootPrintForm.get('phone')}
+get heatingTypeControl(){return this.carbonFootPrintForm.get('heatingType')}
 
-    this.filtredClients = filtered;
-}
-
-  
 }
