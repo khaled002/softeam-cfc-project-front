@@ -81,7 +81,7 @@ export class FormulaireComponent {
       this.showThankYouModal = true; // Affiche le modal de remerciement
       // Redirige après un délai
       setTimeout(() => {
-        this.router.navigate(['softeam/carbon-foot-print/home']);
+        this.router.navigate(['login']);
     
       }, 50000); // Ajustez le délai 
     } else {

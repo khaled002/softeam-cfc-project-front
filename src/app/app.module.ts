@@ -5,11 +5,12 @@ import { AppComponent } from './app.component';
 import { primeComponentsModule } from './shared/prime-components.module';
 import { FormulaireComponent } from './formulaire/formulaire.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
 import { ThankYouModalComponent } from './thank-you-modal/thank-you-modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppLayoutModule } from './layout/app.layout.module';
 
 
 @NgModule({
@@ -17,8 +18,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppComponent,
     FormulaireComponent,
     ThankYouModalComponent,
-    HomeComponent,
-    DashboardComponent
+    LoginComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,7 +28,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    primeComponentsModule
+    primeComponentsModule,
+    AppLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]

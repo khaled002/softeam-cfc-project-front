@@ -18,7 +18,7 @@ export class MenuComponent {
             label: 'Home',
             items: [
                 { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/softeam/carbon-foot-print/g8txk23fkijrg69rty28/dashbord'] },
-                { label: 'Formulaire', icon: 'pi pi-fw pi-id-card', routerLink: ['/softeam/carbon-foot-print/form'] }
+                // { label: 'Formulaire', icon: 'pi pi-fw pi-id-card', routerLink: ['/softeam/carbon-foot-print/form'] }
             ]
         },
         // {

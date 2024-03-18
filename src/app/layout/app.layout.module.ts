@@ -16,6 +16,7 @@ import { LayoutComponent } from './layout.component';
 import { FooterComponent } from './footer/footer.component';
 import { CommonModule } from '@angular/common';
 import { MenuitemComponent } from './menu/menuitem.component';
+import { CardModule } from 'primeng/card';
 
 
 @NgModule({
@@ -38,8 +39,9 @@ import { MenuitemComponent } from './menu/menuitem.component';
         RadioButtonModule,
         InputSwitchModule,
         RippleModule,
+        CardModule,
         RouterModule,
     ],
-    exports: [LayoutComponent]
+    exports: [LayoutComponent, FooterComponent]
 })
 export class AppLayoutModule { }

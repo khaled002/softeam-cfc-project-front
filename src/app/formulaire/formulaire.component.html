@@ -1,5 +1,7 @@
-<main class="container">
-    <h1>Calculateur d'empreinte <span style="display: block;">CO<sub>2</sub></span></h1>
+
+<div class="card-container">
+<p-card>
+    <h1>Calculateur d'empreinte <span>CO<sub>2</sub></span></h1>
     <form [formGroup]="carbonFootPrintForm" (ngSubmit)="onSubmit()">
 
         <div class="flex row">
@@ -84,12 +86,13 @@
             </div>
         </div>
 
-        <!-- Form inputs remain the same -->
         <div class="mt-4">
-            <p-button type="submit" label="Soumettre" class="flex justify-content-center mb-2"></p-button>
+            <p-button icon="pi pi-send" type="submit" label="Soumettre"
+                class="flex justify-content-center mb-2"></p-button>
             <div class="flex justify-content-center">
                 <small class="p-error" *ngIf="!carbonFootPrintForm.valid">* Tous les champs sont obligatoires.</small>
             </div>
         </div>
     </form>
-</main>
+</p-card>
+</div>

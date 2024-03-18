@@ -3,16 +3,7 @@
 }
 
 .layout-main-container {
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-    margin-left: 20%;
-    justify-content: space-between;
-    padding: 2rem 2rem 2rem 4rem;
-    transition: margin-left 0.2s;
+    margin-left: 24rem;
+    padding-top: 2.4rem;
+    
 }
-
-.layout-main {
-    flex: 1 1 auto;
-}
-

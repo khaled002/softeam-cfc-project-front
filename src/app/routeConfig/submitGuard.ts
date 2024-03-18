@@ -10,7 +10,7 @@ export const SubmitGuard = () => {
     if (submissionStateService.getFormSubmitted()) {
       return true; // Permet l'accès si le formulaire a été soumis
     } else {
-      router.navigate(['softeam/carbon-foot-print/home']); 
+      router.navigate(['login']); 
       
       return false;
     }

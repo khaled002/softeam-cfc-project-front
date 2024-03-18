@@ -4,11 +4,11 @@ import { Router } from '@angular/router';
 import { SubmissionStateService } from '../services/submission-state.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
-export class HomeComponent {
+export class LoginComponent {
 
    
   constructor(private router: Router, private submissionStateService: SubmissionStateService) {}
