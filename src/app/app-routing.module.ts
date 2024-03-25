@@ -16,13 +16,12 @@ const routes: Routes = [
         path: '',
         component: LayoutComponent,
         children: [
-          { path: 'g8txk23fkijrg69rty28/dashbord', component: DashboardComponent }
+          { path: 'dashbord', component: DashboardComponent }
         ]
       }
     ]
   },
   { path: '', redirectTo: 'login', pathMatch: 'full' }
-
 ];
 
 @NgModule({

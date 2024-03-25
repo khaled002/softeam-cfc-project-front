@@ -3,6 +3,12 @@
 @import "primeng/resources/primeng.css";
 @import "primeicons/primeicons.css";
 
+body{
+    margin: 0;
+    padding: 0;
+    background-image: url("./assets/images/background.jpg");
+}
+
 $transitionDuration:.2s;  
 $scale:14px;                    /* main font size */ 
 $borderRadius:6px; 
@@ -13,7 +19,6 @@ $borderRadius:6px;
     z-index: 999;
     overflow-y: auto;
     user-select: none;
-    top: 3rem;
     left: 2rem;
     transition: transform $transitionDuration, left $transitionDuration;
     background-color: var(--surface-overlay);
