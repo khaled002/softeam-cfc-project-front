@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { startWith } from 'rxjs/internal/operators/startWith';
 import { map } from 'rxjs/internal/operators/map';
 import { HeatingType } from '../core/enums/HeatingType';
+import { Locomotion } from '../domain/Locomotion';
 
 @Component({
   selector: 'app-formulaire',
@@ -20,12 +21,9 @@ export class FormulaireComponent {
   selectedCountry : any[] = [];
   filteredClients!: Observable<any[]>;
   heatingTypes = Object.values(HeatingType).map((o :string)=> ({label: o, value: o}));
-  meansOfTransportaion = [
-    {label: "Voiture", value: "car"},
-    {label: "Transports en commun", value: "public-transport"},
-    {label: "Vélo", value: "bike"},
-    {label: "Marche", value: "walk"},
-  ];
+  locomotionsFields: any[] = [{}];
+  locomotions : Locomotion[] = [];
+ 
   quantity = [
     {label: "0", value: "0"},
     {label: "1", value: "1"},
@@ -33,9 +31,8 @@ export class FormulaireComponent {
     {label: "3", value: "3"},
   ]
 
-  constructor(private router: Router,private collaborateurService: CollaborateurService, private clientService: ClientService ) {
-   
-  }
+  constructor(private router: Router,private collaborateurService: CollaborateurService, private clientService: ClientService ) {}
+
   ngOnInit(): void {
     this.clientService.getClientsList().subscribe({
       next: (data) => {
@@ -54,27 +51,27 @@ export class FormulaireComponent {
 
   carbonFootPrintForm = new FormGroup({
     client: new FormControl('',Validators.required),
-    presenceDays: new FormControl('', [Validators.required,Validators.min(0), Validators.max(7)]),
-    transportationMode: new FormControl('', Validators.required), 
-    distanceKm: new FormControl('', [Validators.required,Validators.min(0), Validators.max(1000)]), // Exemple : max 1000km pour la distance
+    presenceDays: new FormControl(0, [Validators.required,Validators.min(0), Validators.max(5)]),
     housingType: new FormControl('', Validators.required), 
-    laptop: new FormControl(0, [Validators.required,Validators.min(0), Validators.max(5)]), // Exemple : 0 à 5 laptops
-    desktopComputer: new FormControl(0, [Validators.required,Validators.min(0), Validators.max(5)]),
-    monitor: new FormControl(0, [Validators.required,Validators.min(0), Validators.max(5)]),
-    phone: new FormControl(0, [Validators.required,Validators.min(0), Validators.max(5)]),
-    heatingType: new FormControl('',Validators.required)
+    heatingType: new FormControl('',Validators.required),
+    laptop: new FormControl(this.quantity[0], [Validators.required,Validators.min(0), Validators.max(5)]), // Exemple : this.quantity[0] à 5 laptops
+    desktop: new FormControl(this.quantity[0], [Validators.required,Validators.min(0), Validators.max(5)]),
+    monitor: new FormControl(this.quantity[0], [Validators.required,Validators.min(0), Validators.max(5)]),
+    phone: new FormControl(this.quantity[0], [Validators.required,Validators.min(0), Validators.max(5)])
   });
 
   onSubmit() {
     if (this.carbonFootPrintForm.valid) {
-      this.collaborateurService.calculateCarbonFoorPrint(this.carbonFootPrintForm.value).subscribe({
+      let formValue = {...this.carbonFootPrintForm?.value, locomotions: this.locomotions}
+      console.log(formValue)
+      //todo api calculateCarbonFoorPrint à modifier
+      this.collaborateurService.calculateCarbonFoorPrint(formValue).subscribe({
          next: (data) => {
            
          },
          error : (error) => {
           console.log(error);
          }
-
       });
 
       
@@ -96,22 +93,34 @@ export class FormulaireComponent {
       this.router.navigate(['/']);
     }, 30);
   }
+  addNewLocomotionField() {
+    this.locomotionsFields.push({})
+  }
+
+  updateLocomotionValue(event: any, index: number){
+    this.locomotions[index] = event;
+  }
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-
     return this.clients.filter(option => option.name.toLowerCase().includes(filterValue));
+  }
+
+  showHeatingForm(){
+    let presenceDays = this.carbonFootPrintForm.get('presenceDays')?.value;
+    if(presenceDays !== null && presenceDays !== undefined){
+      return presenceDays < 5
+    }
+    return false;
   }
 
 get clientControl() { return this.carbonFootPrintForm.get('client');}
 get presenceControl() {return this.carbonFootPrintForm.get('presenceDays')}
-get transportationModeControl() {return this.carbonFootPrintForm.get('transportationMode')}
-get distanceControl() {return this.carbonFootPrintForm.get('distanceKm')}
 get housingTypeControl(){return this.carbonFootPrintForm.get('housingType')}
+get heatingTypeControl(){return this.carbonFootPrintForm.get('heatingType')}
 get lapTopControl(){return this.carbonFootPrintForm.get('laptop')}
 get monitorControl(){return this.carbonFootPrintForm.get('monitor')}
-get desktopControl(){return this.carbonFootPrintForm.get('desktopComputer')}
+get desktopControl(){return this.carbonFootPrintForm.get('desktop')}
 get phoneControl(){return this.carbonFootPrintForm.get('phone')}
-get heatingTypeControl(){return this.carbonFootPrintForm.get('heatingType')}
 
 }

@@ -1,0 +1,104 @@
+<p-card class="m-2">
+    <div class="flex justify-content-end">
+        <p-button label="Google maps" icon="pi pi-map-marker" (click)="goToMaps()"></p-button>
+    </div>
+    <form [formGroup]="locomotionForm">
+        <div>
+            <label for="transport" class="font-bold mr-2">Moyen de transport pour aller sur site:</label>
+            <p-dropdown id="transport" name="transport" formControlName="locomotion" (change)="onLocomotionChange()"
+                [options]="meansOfTransportaion" optionLabel="label"
+                placeholder="Selectionner un mode de transport"></p-dropdown>
+        </div>
+
+        @switch (locomotionControl.value) {
+        @case (TransportationOptions.BUS) {
+        <div>
+            <label for="distance" class="font-bold mr-2">Distance parcourue en KM:</label>
+            <p-inputNumber id="distance" name="distance" formControlName="distance"></p-inputNumber>
+        </div>
+        <div>
+            <label for="temps" class="font-bold mr-2">Le temps passé en h:</label>
+            <p-inputNumber id="time" name="time" formControlName="time"></p-inputNumber>
+        </div>
+        }
+        @case (TransportationOptions.METRO) {
+        <div>
+            <label for="distance" class="font-bold mr-2">Distance parcourue en KM:</label>
+            <p-inputNumber id="distance" name="distance" formControlName="distance"></p-inputNumber>
+        </div>
+        <div>
+            <label for="temps" class="font-bold mr-2">Le temps passé en h:</label>
+            <p-inputNumber id="time" name="time" formControlName="time"></p-inputNumber>
+        </div>
+        }
+        @case (TransportationOptions.SCOOTER) {
+        <div>
+            <label for="distance" class="font-bold mr-2">Distance parcourue en KM:</label>
+            <p-inputNumber id="distance" name="distance" formControlName="distance"></p-inputNumber>
+        </div>
+        <div>
+            <label for="temps" class="font-bold mr-2">Le temps passé en h:</label>
+            <p-inputNumber id="time" name="time" formControlName="time"></p-inputNumber>
+        </div>
+        }
+
+        @case (TransportationOptions.BIKE) {
+        <p-checkbox label="Vélo à Assistance Électrique (VAE):" name="vae" value="vae"
+            formControlName="vae"></p-checkbox>
+
+        @if(vae == 'vae') {
+        <div>
+            <label for="distance" class="font-bold mr-2">Distance parcourue en KM:</label>
+            <p-inputNumber id="distance" name="distance" formControlName="distance"></p-inputNumber>
+        </div>
+        <div>
+            <label for="temps" class="font-bold mr-2">Le temps passé en h:</label>
+            <p-inputNumber id="time" name="time" formControlName="time"></p-inputNumber>
+        </div>
+        }
+        }
+
+        @case (TransportationOptions.CAR) {
+        <div>
+            <label for="distance" class="font-bold mr-2">Distance parcourue en KM:</label>
+            <p-inputNumber id="distance" name="distance" formControlName="distance"></p-inputNumber>
+        </div>
+        <div>
+            <label for="temps" class="font-bold mr-2">Le temps passé en h:</label>
+            <p-inputNumber id="time" name="time" formControlName="time"></p-inputNumber>
+        </div>
+        <div>
+            <label for="distance" class="font-bold mr-2">Gabarit de voiture:</label>
+            <p-dropdown id="cartemplate" name="cartemplate" formControlName="cartemplate" [options]="carTemplate"
+                optionLabel="label" placeholder="Selectionner un gabarit"></p-dropdown>
+        </div>
+
+        <div>
+            <label for="distance" class="font-bold mr-2">Type de voiture:</label>
+            <p-dropdown id="carType" name="carType" formControlName="vehicleType" [options]="vehicleTypes"
+                optionLabel="label" placeholder="Selectionner un type"></p-dropdown>
+        </div>
+        <div>
+            <p-checkbox label="propose covoiturage:" name="carpooling" value="yes"
+                formControlName="carpooling"></p-checkbox>
+        </div>
+        }
+
+        @case (TransportationOptions.MOTORIZED) {
+        <div>
+            <label for="distance" class="font-bold mr-2">Distance parcourue en KM:</label>
+            <p-inputNumber id="distance" name="distance" formControlName="distance"></p-inputNumber>
+        </div>
+        <div>
+            <label for="temps" class="font-bold mr-2">Le temps passé en h:</label>
+            <p-inputNumber id="time" name="time" formControlName="time"></p-inputNumber>
+        </div>
+        <div>
+            <label for="distance" class="font-bold mr-2">Type des deux-roues motorisé:</label>
+            <p-dropdown id="twoWheeler" name="twoWheeler" formControlName="twoWheeler" [options]="twoWheelerTypes"
+                optionLabel="label" placeholder="Selectionner le type"></p-dropdown>
+        </div>
+        }
+        }
+    </form>
+</p-card>

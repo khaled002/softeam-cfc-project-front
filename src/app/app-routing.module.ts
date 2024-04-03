@@ -21,7 +21,7 @@ const routes: Routes = [
       }
     ]
   },
-  { path: '', redirectTo: 'login', pathMatch: 'full' }
+  { path: '', redirectTo: 'softeam/carbon-foot-print/form', pathMatch: 'full' }
 ];
 
 @NgModule({

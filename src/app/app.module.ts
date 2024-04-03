@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppLayoutModule } from './layout/app.layout.module';
+import { LocomotionComponent } from './formulaire/locomotion/locomotion.component';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { AppLayoutModule } from './layout/app.layout.module';
     ThankYouModalComponent,
     LoginComponent,
     DashboardComponent,
+    LocomotionComponent,
   ],
   imports: [
     BrowserModule,

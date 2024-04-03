@@ -1,98 +1,92 @@
-
 <div class="card-container pt-3">
-<p-card>
-    <h1>Calculateur d'empreinte <span>CO<sub>2</sub></span></h1>
-    <form [formGroup]="carbonFootPrintForm" (ngSubmit)="onSubmit()">
-
-        <div class="flex row">
-            <div class=" col-6 flex-auto">
+    <p-card>
+        <h1>Calculateur d'empreinte <span>CO<sub>2</sub></span></h1>
+        <form [formGroup]="carbonFootPrintForm" (ngSubmit)="onSubmit()">
+            <div class="mb-2">
                 <label for="clients" class="font-bold"> Client: </label>
                 <p-dropdown id="clients" name="client" formControlName="client"
                     [class.invalid]="heatingTypeControl?.invalid && heatingTypeControl?.touched" [options]="clients"
                     optionLabel="label" placeholder="Select a client"></p-dropdown>
             </div>
-            <div class="flex-auto col-6">
+            <div class="mb-2">
                 <label for="days-site" class="font-bold">Nombre de jours de présence sur site par semaine:</label>
                 <p-inputNumber id="days-site" mode="decimal" formControlName="presenceDays"
                     [class.invalid]="presenceControl?.invalid && presenceControl?.touched"> </p-inputNumber>
             </div>
-        </div>
 
-        <div class="flex row">
-            <div class="flex-auto col-6">
-                <label for="transport" class="font-bold">Moyen de locomotion pour aller sur site:</label>
-                <p-dropdown id="transport" name="transport" formControlName="transportationMode"
-                    [class.invalid]="transportationModeControl?.invalid && transportationModeControl?.touched"
-                    [options]="meansOfTransportaion" optionLabel="label"
-                    placeholder="Selectionner un mode de transport"></p-dropdown>
-            </div>
-
-            <div class="flex-auto col-6">
-                <label for="distance" class="font-bold">Distance parcourue en KM:</label>
-                <p-inputNumber id="distance" name="distance" formControlName="distanceKm"
-                    [class.invalid]="distanceControl?.invalid && distanceControl?.touched"></p-inputNumber>
-            </div>
-        </div>
-
-        <div class="flex row">
-            <div class="flex-auto col-6">
-                <label class="font-bold">Type d'habitation:</label>
-                <div class="flex align-items-center mb-2">
-                    <p-checkbox label="Appartement" name="housingType" value="apartment" formControlName="housingType"
-                        [class.invalid]="housingTypeControl?.invalid && housingTypeControl?.touched"></p-checkbox>
+            @if(showHeatingForm()){
+            <div class="mb-2">
+                <div class="mb-2">
+                    <label for="heating" class="font-bold">Chauffage:</label>
+                    <p-dropdown id="heating" name="heatingType" formControlName="heatingType"
+                        [class.invalid]="heatingTypeControl?.invalid && heatingTypeControl?.touched"
+                        [options]="heatingTypes" optionLabel="label" placeholder="Type de chauffage"></p-dropdown>
                 </div>
-                <div class="flex align-items-center">
-                    <p-checkbox label="Maison" name="housingType" value="house" formControlName="housingType"
-                        [class.invalid]="housingTypeControl?.invalid && housingTypeControl?.touched"></p-checkbox>
+                <div>
+                    <label class="font-bold">Type d'habitation:</label>
+                    <div class="flex">
+                        <p-radioButton name="housingType" value="apratment" formControlName="housingType"
+                            inputId="housingType"
+                            [class.invalid]="housingTypeControl?.invalid && housingTypeControl?.touched"></p-radioButton>
+                        <label for="housingType" class="ml-2">Appartement</label>
+                    </div>
+                    <div class="flex">
+                        <p-radioButton name="housingType" value="house" formControlName="housingType"
+                            inputId="housingType"
+                            [class.invalid]="housingTypeControl?.invalid && housingTypeControl?.touched"></p-radioButton>
+                        <label for="housingType" class="ml-2">Maison</label>
+                    </div>
                 </div>
             </div>
-            <div class="flex-auto col-6">
-                <label for="heating" class="font-bold">Chauffage:</label>
-                <p-dropdown id="heating" name="heatingType" formControlName="heatingType"
-                    [class.invalid]="heatingTypeControl?.invalid && heatingTypeControl?.touched"
-                    [options]="heatingTypes" optionLabel="label" placeholder="Type de chauffage"></p-dropdown>
-            </div>
-        </div>
+            }
 
-        <div class="flex row">
-            <div class="flex-auto col">
-                <label for="laptop" class="font-bold">Ordinateur portable:</label>
-                <p-dropdown id="laptop" name="laptop" formControlName="laptop"
-                    [class.invalid]="lapTopControl?.invalid && lapTopControl?.touched" [options]="quantity"
-                    optionLabel="label" placeholder="Selectionne un nombre"></p-dropdown>
-            </div>
+            @for (item of locomotionsFields; track item; let index = $index) {
+                <div class="mb-2">
+                    <locomotion-form  (formChange)="updateLocomotionValue($event, index)"></locomotion-form>
+                </div>
+            }
+            <p-button (click)="addNewLocomotionField()">Ajouter un autre moyen de transport</p-button>
 
-            <div class="flex-auto col">
-                <label for="laptop" class="font-bold">Ordinateur portable:</label>
-                <p-dropdown id="laptop" name="laptop" formControlName="laptop"
-                    [class.invalid]="lapTopControl?.invalid && lapTopControl?.touched" [options]="quantity"
-                    optionLabel="label" placeholder="Selectionne un nombre"></p-dropdown>
-            </div>
-        </div>
+            <div class="flex row">
+                <div class="col-6">
+                    <label for="laptop" class="font-bold">Ordinateur portable:</label>
+                    <p-dropdown id="laptop" name="laptop" formControlName="laptop"
+                        [class.invalid]="lapTopControl?.invalid && lapTopControl?.touched" [options]="quantity"
+                        optionLabel="label" placeholder="Selectionne un nombre"></p-dropdown>
+                </div>
 
-        <div class="flex row">
-            <div class="flex-auto col">
-                <label for="screen" class="font-bold">Écran:</label>
-                <p-dropdown id="screen" name="screen" formControlName="monitor"
-                    [class.invalid]="monitorControl?.invalid && monitorControl?.touched" [options]="quantity"
-                    optionLabel="label" placeholder="Selectionne un nombre"></p-dropdown>
+                <div class="col-6">
+                    <label for="laptop" class="font-bold">Ordinateur fixe:</label>
+                    <p-dropdown id="laptop" name="laptop" formControlName="desktop"
+                        [class.invalid]="lapTopControl?.invalid && lapTopControl?.touched" [options]="quantity"
+                        optionLabel="label" placeholder="Selectionne un nombre"></p-dropdown>
+                </div>
             </div>
 
-            <div class="flex-auto col">
-                <label for="phone" class="font-bold">Téléphone:</label>
-                <p-dropdown id="phone" name="phone" formControlName="phone"
-                    [class.invalid]="phoneControl?.invalid && phoneControl?.touched" [options]="quantity"
-                    optionLabel="label" placeholder="Selectionne un nombre"></p-dropdown>
-            </div>
-        </div>
+            <div class="flex row">
+                <div class="col-6">
+                    <label for="screen" class="font-bold">Écran:</label>
+                    <p-dropdown id="screen" name="screen" formControlName="monitor"
+                        [class.invalid]="monitorControl?.invalid && monitorControl?.touched" [options]="quantity"
+                        optionLabel="label" placeholder="Selectionne un nombre"></p-dropdown>
+                </div>
 
-        <div class="mt-4">
-            <p-button icon="pi pi-send" type="submit" label="Soumettre"
-                class="flex justify-content-center mb-2"></p-button>
-            <div class="flex justify-content-center">
-                <small class="p-error" *ngIf="!carbonFootPrintForm.valid">* Tous les champs sont obligatoires.</small>
+                <div class="col-6">
+                    <label for="phone" class="font-bold">Téléphone portable:</label>
+                    <p-dropdown id="phone" name="phone" formControlName="phone"
+                        [class.invalid]="phoneControl?.invalid && phoneControl?.touched" [options]="quantity"
+                        optionLabel="label" placeholder="Selectionne un nombre"></p-dropdown>
+                </div>
             </div>
-        </div>
-    </form>
-</p-card>
+
+            <div class="mt-4">
+                <p-button icon="pi pi-send" type="submit" label="Soumettre"
+                    class="flex justify-content-center mb-2"></p-button>
+                <div class="flex justify-content-center">
+                    <small class="p-error" *ngIf="!carbonFootPrintForm.valid">* Tous les champs sont
+                        obligatoires.</small>
+                </div>
+            </div>
+        </form>
+    </p-card>
 </div>
