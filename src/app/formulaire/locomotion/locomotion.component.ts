@@ -10,28 +10,27 @@ import { MEANS_TRANSPORTATION } from '../../core/enums/Transportation';
 export class LocomotionComponent {
 
   @Output() formChange = new EventEmitter<any>();
-  aaa = "aaa"
   TransportationOptions = MEANS_TRANSPORTATION;
   locomotionForm: FormGroup;
   meansOfTransportaion = [
     { label: "", value: "" },
     { label: "Bus", value: MEANS_TRANSPORTATION.BUS },
-    { label: "métro", value: MEANS_TRANSPORTATION.METRO },
+    { label: "Métro", value: MEANS_TRANSPORTATION.METRO },
     { label: "Vélo", value: MEANS_TRANSPORTATION.BIKE },
     { label: "Voiture", value: MEANS_TRANSPORTATION.CAR },
-    { label: "deux-roues motorisé", value: MEANS_TRANSPORTATION.MOTORIZED },
-    { label: "trottinette", value: MEANS_TRANSPORTATION.SCOOTER },
+    { label: "Moto", value: MEANS_TRANSPORTATION.MOTORIZED },
+    { label: "Trottinette", value: MEANS_TRANSPORTATION.SCOOTER },
   ];
   carTemplate = [
     { label: "", value: "" },
-    { label: "utilitaire", value: "utilitaire" },
-    { label: "citadine", value: "citadine" },
-    { label: "berline", value: "berline" },
+    { label: "Utilitaire", value: "Utilitaire" },
+    { label: "Citadine", value: "Citadine" },
+    { label: "Berline", value: "Berline" },
     { label: "SUV", value: "SUV" }
   ]
   vehicleTypes = [
     { label: "", value: "" },
-    { label: "Électrique", value: "Électrique" },
+    { label: "Électrique", value: "Electrique" },
     { label: "Diesel", value: "Diesel" },
     { label: "GPL", value: "GPL" },
     { label: "Essence", value: "Essence" },
@@ -41,10 +40,10 @@ export class LocomotionComponent {
 
   twoWheelerTypes = [
     { label: "", value: "" },
-    { label: "Scooter thermique (diesel/essence)", value: "Scooter thermique (diesel/essence)" },
-    { label: "Scooter électrique", value: "Scooter électrique" },
-    { label: "Moto de moins de 250 cm3", value: "Moto de moins de 250 cm3" },
-    { label: "Moto de plus de 250 cm3", value: "Moto de plus de 250 cm3" },
+    { label: "Scooter thermique (diesel/essence)", value: "ScooterThermique" },
+    { label: "Scooter électrique", value: "ScooterElectrique" },
+    { label: "Moto de moins de 250 cm3", value: "Moins250cm3" },
+    { label: "Moto de plus de 250 cm3", value: "Plus250cm3" },
   ];
 
   constructor(private fb: FormBuilder) {
@@ -65,18 +64,30 @@ export class LocomotionComponent {
   }
 
   onLocomotionChange() {
-    const locomotion = this.locomotionForm.get('locomotion')?.value;
-    if (locomotion === 'Voiture') {
-      this.locomotionForm.get('vehicleType')?.setValidators(Validators.required);
-      this.locomotionForm.get('carpooling')?.setValidators(Validators.required);
-    } else if (locomotion === 'Deux-roues motorisé') {
-      this.locomotionForm.get('twoWheelerType')?.setValidators(Validators.required);
-    } 
+
+      const locomotion = this.locomotionForm.get('locomotion')?.value;
+      const vehicleTypeControl = this.locomotionForm.get('vehicleType');
+      const carpoolingControl = this.locomotionForm.get('carpooling');
+      const twoWheelerControl = this.locomotionForm.get('twoWheelerType');
+    
+      // Reset validators
+      vehicleTypeControl?.clearValidators();
+      carpoolingControl?.clearValidators();
+      twoWheelerControl?.clearValidators();
+    
+      if (locomotion === MEANS_TRANSPORTATION.CAR) {
+        vehicleTypeControl?.setValidators(Validators.required);
+        carpoolingControl?.setValidators(Validators.required);
+      } else if (locomotion === MEANS_TRANSPORTATION.MOTORIZED) {
+        twoWheelerControl?.setValidators(Validators.required);
+      }
+    
+      // Update value and validity
+      vehicleTypeControl?.updateValueAndValidity();
+      carpoolingControl?.updateValueAndValidity();
+      twoWheelerControl?.updateValueAndValidity();    
   }
     
-  goToMaps() {
-    window.open('https://www.google.com/maps', '_blank');
-  }
 
   get locomotionControl() { return this.locomotionForm.get('locomotion')?.value; }
   get vae() { return this.locomotionForm.get('vae')?.value; }

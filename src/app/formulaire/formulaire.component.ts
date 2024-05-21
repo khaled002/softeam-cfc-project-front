@@ -64,8 +64,10 @@ export class FormulaireComponent {
     if (this.carbonFootPrintForm.valid) {
       let formValue = {...this.carbonFootPrintForm?.value, locomotions: this.locomotions}
       console.log(formValue)
+
+      let adapted = adaptFormValue(formValue);
       //todo api calculateCarbonFoorPrint à modifier
-      this.collaborateurService.calculateCarbonFoorPrint(formValue).subscribe({
+      this.collaborateurService.calculateCarbonFoorPrint(adapted).subscribe({
          next: (data) => {
            
          },
@@ -97,6 +99,10 @@ export class FormulaireComponent {
     this.locomotionsFields.push({})
   }
 
+  removeLocomtionField(){
+    this.locomotionsFields.pop();
+  }
+
   updateLocomotionValue(event: any, index: number){
     this.locomotions[index] = event;
   }
@@ -123,4 +129,37 @@ get monitorControl(){return this.carbonFootPrintForm.get('monitor')}
 get desktopControl(){return this.carbonFootPrintForm.get('desktop')}
 get phoneControl(){return this.carbonFootPrintForm.get('phone')}
 
+}
+
+
+// Fonction d'adaptation pour transformer formValue
+function adaptFormValue(formValue: any): any {
+  const adaptedValue = { ...formValue };
+
+  // Adaptation des clients:
+  adaptedValue.client = adaptedValue.client.value;
+
+  // Adaptation des propriétés spécifiques
+  adaptedValue.housingType = adaptedValue.housingType.toLowerCase(); // Mettre en minuscules
+  adaptedValue.heatingType = adaptedValue.heatingType.value; // Utiliser seulement la valeur 'label' pour heatingType
+
+  // Adaptation des ordinateurs
+  adaptedValue.laptop = adaptedValue.laptop.value;
+  adaptedValue.desktop = adaptedValue.desktop.value;
+  adaptedValue.monitor = adaptedValue.monitor.value;
+  adaptedValue.phone = adaptedValue.phone.value;
+
+  // Adaptation des locomotions
+  adaptedValue.locomotions = adaptedValue.locomotions.map((loc : any) => ({
+    modeTransport: loc.locomotion.value,
+    distance: loc.distance,
+    temps: loc.time,
+    typeEnergie: loc.vehicleType ? loc.vehicleType.value : '',
+    typeMoto: loc.twoWheelerType.value,
+    covoiturage: Array.isArray(loc.carpooling) ? loc.carpooling[0] : loc.carpooling,
+    vae: Array.isArray(loc.vae) ? loc.vae[0] : loc.vae,
+    gabarit: loc.cartemplate ? loc.cartemplate.value : ''
+  }));
+
+  return adaptedValue;
 }

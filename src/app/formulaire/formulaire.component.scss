@@ -32,3 +32,14 @@ label {
     max-width: 900px;
     margin: 0 auto;
   }
+
+  
+.btn-small {
+    padding: 0.25rem 0.5rem; /* Ajuste les dimensions du bouton */
+    font-size: 0.875rem;     /* Taille de la police plus petite */
+}
+
+.right-align {
+    float: right;            /* Aligne les boutons à droite */
+    margin-left: 0.5rem;     /* Espace entre les boutons */
+}

@@ -5,7 +5,7 @@
             <div class="mb-2">
                 <label for="clients" class="font-bold"> Client: </label>
                 <p-dropdown id="clients" name="client" formControlName="client"
-                    [class.invalid]="heatingTypeControl?.invalid && heatingTypeControl?.touched" [options]="clients"
+                    [class.invalid]="clientControl?.invalid && clientControl?.touched" [options]="clients"
                     optionLabel="label" placeholder="Select a client"></p-dropdown>
             </div>
             <div class="mb-2">
@@ -15,7 +15,7 @@
             </div>
 
             @if(showHeatingForm()){
-            <div class="mb-2">
+            <div class="mb-2"> 
                 <div class="mb-2">
                     <label for="heating" class="font-bold">Chauffage:</label>
                     <p-dropdown id="heating" name="heatingType" formControlName="heatingType"
@@ -25,13 +25,13 @@
                 <div>
                     <label class="font-bold">Type d'habitation:</label>
                     <div class="flex">
-                        <p-radioButton name="housingType" value="apratment" formControlName="housingType"
+                        <p-radioButton name="housingType" value="Appartement" formControlName="housingType"
                             inputId="housingType"
                             [class.invalid]="housingTypeControl?.invalid && housingTypeControl?.touched"></p-radioButton>
                         <label for="housingType" class="ml-2">Appartement</label>
                     </div>
                     <div class="flex">
-                        <p-radioButton name="housingType" value="house" formControlName="housingType"
+                        <p-radioButton name="housingType" value="Maison" formControlName="housingType"
                             inputId="housingType"
                             [class.invalid]="housingTypeControl?.invalid && housingTypeControl?.touched"></p-radioButton>
                         <label for="housingType" class="ml-2">Maison</label>
@@ -39,14 +39,6 @@
                 </div>
             </div>
             }
-
-            @for (item of locomotionsFields; track item; let index = $index) {
-                <div class="mb-2">
-                    <locomotion-form  (formChange)="updateLocomotionValue($event, index)"></locomotion-form>
-                </div>
-            }
-            <p-button (click)="addNewLocomotionField()">Ajouter un autre moyen de transport</p-button>
-
             <div class="flex row">
                 <div class="col-6">
                     <label for="laptop" class="font-bold">Ordinateur portable:</label>
@@ -79,6 +71,18 @@
                 </div>
             </div>
 
+
+            @for (item of locomotionsFields; track item; let index = $index) {
+                <div class="mb-2">
+                    <locomotion-form  (formChange)="updateLocomotionValue($event, index)"></locomotion-form>
+                </div>
+            }
+            <div class="flex justify-content-end mb-2">
+                <p-button class="btn-small" (click)="addNewLocomotionField()">Ajouter un autre moyen de transport</p-button>
+                <p-button class="btn-small" (click)="removeLocomtionField()">Supprimer moyen de transport</p-button>
+            </div>
+            
+           
             <div class="mt-4">
                 <p-button icon="pi pi-send" type="submit" label="Soumettre"
                     class="flex justify-content-center mb-2"></p-button>
