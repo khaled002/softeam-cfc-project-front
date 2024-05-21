@@ -53,11 +53,7 @@
     flex-direction: column;
   }
   
-  input.ng-touched.ng-invalid,
-  select.ng-touched.ng-invalid {
-    border: 1px solid red;
-  }
-  
+
   .fingerprint {
     background-image: url('../../assets/images/fingerprint.png');
     background-size: cover;

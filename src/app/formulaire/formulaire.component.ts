@@ -135,6 +135,7 @@ get phoneControl(){return this.carbonFootPrintForm.get('phone')}
 // Fonction d'adaptation pour transformer formValue
 function adaptFormValue(formValue: any): any {
   const adaptedValue = { ...formValue };
+  adaptedValue.email = localStorage.getItem("email")
 
   // Adaptation des clients:
   adaptedValue.client = adaptedValue.client.value;

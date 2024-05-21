@@ -17,4 +17,8 @@ export class CollaborateurService {
     return this.http.post<any>(url,collaborateurForm);
   }
 
+  getCollaborateurByEmail(email: string) {
+    return this.http.get(`${this.baseUrl}/email/${email}`);
+  }
+
 }
