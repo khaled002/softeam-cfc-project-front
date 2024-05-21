@@ -15,7 +15,7 @@
             </div>
 
             @if(showHeatingForm()){
-            <div class="mb-2"> 
+            <div class="mb-2">
                 <div class="mb-2">
                     <label for="heating" class="font-bold">Chauffage:</label>
                     <p-dropdown id="heating" name="heatingType" formControlName="heatingType"
@@ -71,18 +71,16 @@
                 </div>
             </div>
 
-
             @for (item of locomotionsFields; track item; let index = $index) {
-                <div class="mb-2">
-                    <locomotion-form  (formChange)="updateLocomotionValue($event, index)"></locomotion-form>
-                </div>
+            <div class="mb-2">
+                <locomotion-form (formChange)="updateLocomotionValue($event, index)"></locomotion-form>
+            </div>
             }
             <div class="flex justify-content-end mb-2">
                 <p-button class="btn-small" (click)="addNewLocomotionField()">Ajouter un autre moyen de transport</p-button>
                 <p-button class="btn-small" (click)="removeLocomtionField()">Supprimer moyen de transport</p-button>
             </div>
-            
-           
+
             <div class="mt-4">
                 <p-button icon="pi pi-send" type="submit" label="Soumettre"
                     class="flex justify-content-center mb-2"></p-button>

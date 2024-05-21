@@ -208,8 +208,6 @@ send() {
   }
 
   ValidForm(): boolean {
-   
-    
     // Vérifiez si tous les champs requis sont non nuls, non vides et que l'email correspond au format requis
     return !!(this.collaborateur?.nom?.trim() && 
               this.collaborateur?.prenom?.trim() && 
@@ -220,9 +218,8 @@ send() {
 
    validEmail() : boolean {
     // Expression régulière pour valider l'email et le domaine
-    const emailRegex: RegExp = /^[^\s@]+@softeam\.com$/;
+    const emailRegex: RegExp = /^[^\s@]+@softeam\.fr$/;
     return !!(this.collaborateur?.email?.trim() && emailRegex.test(this.collaborateur.email.trim()));
-
   }
 
 }

@@ -17,7 +17,7 @@ export class LoginComponent {
   constructor(private router: Router, private submissionStateService: SubmissionStateService, private collaborateurService: CollaborateurService, private messageService: MessageService) { }
 
   surveyForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email, this.emailDomainValidator('softeam.com')]),
+    email: new FormControl('', [Validators.required, Validators.email, this.emailDomainValidator('softeam.fr')]),
   });
 
 
