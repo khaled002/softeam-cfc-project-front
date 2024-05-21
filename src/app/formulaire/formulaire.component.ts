@@ -23,13 +23,15 @@ export class FormulaireComponent {
   heatingTypes = Object.values(HeatingType).map((o :string)=> ({label: o, value: o}));
   locomotionsFields: any[] = [{}];
   locomotions : Locomotion[] = [];
- 
+ footprintValue: any;
   quantity = [
     {label: "0", value: "0"},
     {label: "1", value: "1"},
     {label: "2", value: "2"},
     {label: "3", value: "3"},
   ]
+
+  visible: boolean = false;
 
   constructor(private router: Router,private collaborateurService: CollaborateurService, private clientService: ClientService ) {}
 
@@ -63,12 +65,13 @@ export class FormulaireComponent {
   onSubmit() {
     if (this.carbonFootPrintForm.valid) {
       let formValue = {...this.carbonFootPrintForm?.value, locomotions: this.locomotions}
-      console.log(formValue)
-
+   
       let adapted = adaptFormValue(formValue);
       //todo api calculateCarbonFoorPrint à modifier
       this.collaborateurService.calculateCarbonFoorPrint(adapted).subscribe({
          next: (data) => {
+          this.footprintValue = data
+          this.visible = true
            
          },
          error : (error) => {

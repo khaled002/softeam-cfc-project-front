@@ -40,3 +40,9 @@ label {
     float: right;            /* Aligne les boutons à droite */
     margin-left: 0.5rem;     /* Espace entre les boutons */
 }
+
+.img-centered{
+    width: 100px;
+    margin: 0 auto;
+    display: flex;
+}

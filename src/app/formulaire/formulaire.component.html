@@ -92,3 +92,8 @@
         </form>
     </p-card>
 </div>
+
+<p-dialog [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
+    <img src="../../assets/images/footprint.png" alt="footprint" class="img-centered">
+    <h3 class="text-center">Votre empreinte carbone est: </h3> <h3 class="text-center">{{footprintValue}} KG/CO2</h3>
+</p-dialog>

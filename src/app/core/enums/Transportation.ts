@@ -1,6 +1,6 @@
 export enum MEANS_TRANSPORTATION {
     BUS = 'Bus',
-    METRO = 'Metro',
+    METRO = 'Métro',
     BIKE = 'Vélo',
     CAR = 'Voiture',
     MOTORIZED = 'Moto',
