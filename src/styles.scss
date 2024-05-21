@@ -147,7 +147,8 @@ $borderRadius:6px;
 
 
 input.ng-touched.ng-invalid,
-select.ng-touched.ng-invalid {
+select.ng-touched.ng-invalid,
+p-dropdown.ng-touched.ng-invalid>.p-dropdown,
+p-radiobutton.ng-touched.ng-invalid>div>.p-radiobutton-box {
   border: 1px solid red;
 }
-
