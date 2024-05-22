@@ -8,5 +8,4 @@ import { LayoutService } from '../layout.service';
 })
 export class SidebarComponent {
   constructor(public layoutService: LayoutService, public el: ElementRef) { }
-
 }

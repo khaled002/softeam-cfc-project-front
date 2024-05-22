@@ -16,107 +16,88 @@ import { Locomotion } from '../domain/Locomotion';
 })
 export class FormulaireComponent {
 
-  showThankYouModal: boolean = false;
-  clients : any[]= [];
-  selectedCountry : any[] = [];
+  clients: any[] = [];
+  selectedCountry: any[] = [];
   filteredClients!: Observable<any[]>;
-  heatingTypes = Object.values(HeatingType).map((o :string)=> ({label: o, value: o}));
+  heatingTypes = Object.values(HeatingType).map((o: string) => ({ label: o, value: o }));
   locomotionsFields: any[] = [{}];
-  locomotions : Locomotion[] = [];
- footprintValue : any = {
-  empreinteTotalParSemaine: 0,
-  empreinteParJourDePresence:0
- };
+  locomotions: Locomotion[] = [];
+  footprintValue: any = {
+    empreinteTotalParSemaine: 0,
+    empreinteParJourDePresence: 0
+  };
   quantity = [
-    {label: "0", value: "0"},
-    {label: "1", value: "1"},
-    {label: "2", value: "2"},
-    {label: "3", value: "3"},
+    { label: "0", value: "0" },
+    { label: "1", value: "1" },
+    { label: "2", value: "2" },
+    { label: "3", value: "3" },
   ]
 
   visible: boolean = false;
 
-  constructor(private router: Router,private collaborateurService: CollaborateurService, private clientService: ClientService ) {}
+  constructor(private router: Router, private collaborateurService: CollaborateurService, private clientService: ClientService) { }
 
   ngOnInit(): void {
     this.clientService.getClientsList().subscribe({
       next: (data) => {
-        this.clients = data.map((client :string)=> ({label: client, value: client}))
+        this.clients = data.map((client: string) => ({ label: client, value: client }))
       }
     });
 
-    if(this.clientControl)
-    {
-    this.filteredClients = this.clientControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filter(value?? ''))
-    );
+    if (this.clientControl) {
+      this.filteredClients = this.clientControl.valueChanges.pipe(
+        startWith(''),
+        map(value => this._filter(value ?? ''))
+      );
     }
   }
 
   carbonFootPrintForm = new FormGroup({
-    client: new FormControl('',Validators.required),
-    presenceDays: new FormControl(1, [Validators.required,Validators.min(1), Validators.max(5)]),
-    housingType: new FormControl('', Validators.required), 
-    heatingType: new FormControl('',Validators.required),
-    laptop: new FormControl(this.quantity[0], [Validators.required,Validators.min(0), Validators.max(5)]), // Exemple : this.quantity[0] à 5 laptops
-    desktop: new FormControl(this.quantity[0], [Validators.required,Validators.min(0), Validators.max(5)]),
-    monitor: new FormControl(this.quantity[0], [Validators.required,Validators.min(0), Validators.max(5)]),
-    phone: new FormControl(this.quantity[0], [Validators.required,Validators.min(0), Validators.max(5)])
+    client: new FormControl('', Validators.required),
+    presenceDays: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(5)]),
+    housingType: new FormControl('', Validators.required),
+    heatingType: new FormControl('', Validators.required),
+    laptop: new FormControl(this.quantity[0], [Validators.required, Validators.min(0), Validators.max(5)]), // Exemple : this.quantity[0] à 5 laptops
+    desktop: new FormControl(this.quantity[0], [Validators.required, Validators.min(0), Validators.max(5)]),
+    monitor: new FormControl(this.quantity[0], [Validators.required, Validators.min(0), Validators.max(5)]),
+    phone: new FormControl(this.quantity[0], [Validators.required, Validators.min(0), Validators.max(5)])
   });
 
-  t(){
-    console.log("ffff")
+  redirect() {
+    this.router.navigate(['login']);
   }
 
   onSubmit() {
 
     this.collaborateurService.emitEvent();
-    console.log(this.carbonFootPrintForm.valid)
     if (this.carbonFootPrintForm.valid) {
-      let formValue = {...this.carbonFootPrintForm?.value, locomotions: this.locomotions}
-   
+      let formValue = { ...this.carbonFootPrintForm?.value, locomotions: this.locomotions }
+
       let adapted = adaptFormValue(formValue);
       //todo api calculateCarbonFoorPrint à modifier
       this.collaborateurService.calculateCarbonFoorPrint(adapted).subscribe({
-         next: (data) => {
+        next: (data) => {
           this.footprintValue = data
           this.visible = true
-           
-         },
-         error : (error) => {
-          console.log(error);
-         }
+        },
+        error: (error) => {
+        }
       });
-
-      
-      this.showThankYouModal = true; // Affiche le modal de remerciement
-      // Redirige après un délai
-      setTimeout(() => {
-        this.router.navigate(['login']);
-    
-      }, 50000); // Ajustez le délai 
     } else {
       this.carbonFootPrintForm.markAllAsTouched();
     }
-    
+
   }
 
-  onModalClose() {
-    this.showThankYouModal = false; // Cache le modal
-    setTimeout(() => {
-      this.router.navigate(['/']);
-    }, 30);
-  }
   addNewLocomotionField() {
     this.locomotionsFields.push({})
   }
 
-  removeLocomtionField(){
+  removeLocomtionField() {
     this.locomotionsFields.pop();
   }
 
-  updateLocomotionValue(event: any, index: number){
+  updateLocomotionValue(event: any, index: number) {
     this.locomotions[index] = event;
   }
 
@@ -125,22 +106,22 @@ export class FormulaireComponent {
     return this.clients.filter(option => option.name.toLowerCase().includes(filterValue));
   }
 
-  showHeatingForm(){
+  showHeatingForm() {
     let presenceDays = this.carbonFootPrintForm.get('presenceDays')?.value;
-    if(presenceDays !== null && presenceDays !== undefined){
+    if (presenceDays !== null && presenceDays !== undefined) {
       return presenceDays < 5
     }
     return false;
   }
 
-get clientControl() { return this.carbonFootPrintForm.get('client');}
-get presenceControl() {return this.carbonFootPrintForm.get('presenceDays')}
-get housingTypeControl(){return this.carbonFootPrintForm.get('housingType')}
-get heatingTypeControl(){return this.carbonFootPrintForm.get('heatingType')}
-get lapTopControl(){return this.carbonFootPrintForm.get('laptop')}
-get monitorControl(){return this.carbonFootPrintForm.get('monitor')}
-get desktopControl(){return this.carbonFootPrintForm.get('desktop')}
-get phoneControl(){return this.carbonFootPrintForm.get('phone')}
+  get clientControl() { return this.carbonFootPrintForm.get('client'); }
+  get presenceControl() { return this.carbonFootPrintForm.get('presenceDays') }
+  get housingTypeControl() { return this.carbonFootPrintForm.get('housingType') }
+  get heatingTypeControl() { return this.carbonFootPrintForm.get('heatingType') }
+  get lapTopControl() { return this.carbonFootPrintForm.get('laptop') }
+  get monitorControl() { return this.carbonFootPrintForm.get('monitor') }
+  get desktopControl() { return this.carbonFootPrintForm.get('desktop') }
+  get phoneControl() { return this.carbonFootPrintForm.get('phone') }
 
 }
 
@@ -164,7 +145,7 @@ function adaptFormValue(formValue: any): any {
   adaptedValue.phone = adaptedValue.phone.value;
 
   // Adaptation des locomotions
-  adaptedValue.locomotions = adaptedValue.locomotions.map((loc : any) => ({
+  adaptedValue.locomotions = adaptedValue.locomotions.map((loc: any) => ({
     modeTransport: loc.locomotion.value,
     distance: loc.distance,
     temps: loc.time,

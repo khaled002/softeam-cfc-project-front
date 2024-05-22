@@ -64,7 +64,7 @@ export class LocomotionComponent implements OnInit, OnDestroy {
     });
   }
 
-  
+
   ngOnInit() {
     this.eventSubscription = this.collaborateurService.getEvent().subscribe(() => {
       this.locomotionForm.markAllAsTouched();
@@ -79,29 +79,29 @@ export class LocomotionComponent implements OnInit, OnDestroy {
 
   onLocomotionChange() {
 
-      const locomotion = this.locomotionForm.get('locomotion')?.value;
-      const vehicleTypeControl = this.locomotionForm.get('vehicleType');
-      const carpoolingControl = this.locomotionForm.get('carpooling');
-      const twoWheelerControl = this.locomotionForm.get('twoWheelerType');
-    
-      // Reset validators
-      vehicleTypeControl?.clearValidators();
-      carpoolingControl?.clearValidators();
-      twoWheelerControl?.clearValidators();
-    
-      if (locomotion === MEANS_TRANSPORTATION.CAR) {
-        vehicleTypeControl?.setValidators(Validators.required);
-        carpoolingControl?.setValidators(Validators.required);
-      } else if (locomotion === MEANS_TRANSPORTATION.MOTORIZED) {
-        twoWheelerControl?.setValidators(Validators.required);
-      }
-    
-      // Update value and validity
-      vehicleTypeControl?.updateValueAndValidity();
-      carpoolingControl?.updateValueAndValidity();
-      twoWheelerControl?.updateValueAndValidity();    
+    const locomotion = this.locomotionForm.get('locomotion')?.value;
+    const vehicleTypeControl = this.locomotionForm.get('vehicleType');
+    const carpoolingControl = this.locomotionForm.get('carpooling');
+    const twoWheelerControl = this.locomotionForm.get('twoWheelerType');
+
+    // Reset validators
+    vehicleTypeControl?.clearValidators();
+    carpoolingControl?.clearValidators();
+    twoWheelerControl?.clearValidators();
+
+    if (locomotion === MEANS_TRANSPORTATION.CAR) {
+      vehicleTypeControl?.setValidators(Validators.required);
+      carpoolingControl?.setValidators(Validators.required);
+    } else if (locomotion === MEANS_TRANSPORTATION.MOTORIZED) {
+      twoWheelerControl?.setValidators(Validators.required);
+    }
+
+    // Update value and validity
+    vehicleTypeControl?.updateValueAndValidity();
+    carpoolingControl?.updateValueAndValidity();
+    twoWheelerControl?.updateValueAndValidity();
   }
-    
+
 
   get locomotionControl() { return this.locomotionForm.get('locomotion')?.value; }
   get vae() { return this.locomotionForm.get('vae')?.value; }

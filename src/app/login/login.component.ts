@@ -44,7 +44,7 @@ export class LoginComponent {
           }
           this.submissionStateService.setFormSubmitted(true); // Marque le formulaire comme soumis
           this.router.navigate(['softeam/carbon-foot-print/form']); // Redirige vers la page protégée
-          localStorage.setItem('email',emailValue);
+          localStorage.setItem('email', emailValue);
         }
       )
     }

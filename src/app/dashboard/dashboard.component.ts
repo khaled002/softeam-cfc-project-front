@@ -196,8 +196,6 @@ send() {
         this.collaborateurAdminService.sendEmails(this.selectedCollabs?.map(c => c.id)).subscribe({
             next: (data) => {
                 this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'Emails envoyés ', life: 3000 });
-                console.log(data);
-
             },
             error: (error) => {
                 this.messageService.add({ severity: 'error', summary: 'Erreur !', detail: 'Une erreur est apparue côté serveur ! ', life: 3000 });

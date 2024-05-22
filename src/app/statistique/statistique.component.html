@@ -18,7 +18,7 @@
             <th>Prenom </th>
             <th>Unité Commerciale</th>
             <th>Email </th>
-            <th pSortableColumn="client">Client</th>
+            <th pSortableColumn="client">Client <p-sortIcon field="client"></p-sortIcon></th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-collaborateur>
@@ -27,7 +27,7 @@
             <td>{{ collaborateur.prenom }}</td>
             <td>{{ collaborateur.uc }}</td>
             <td>{{ collaborateur.email }}</td>
-            <td>{{ collaborateur.client }}</td>
+            <td pSortableColumn="client">{{ collaborateur.client }}</td>
         </tr>
     </ng-template>
     <ng-template pTemplate="summary">
@@ -48,7 +48,7 @@
             <th>Prenom </th>
             <th>Unité Commerciale</th>
             <th>Email </th>
-            <th>Client</th>
+            <th pSortableColumn="client">Client <p-sortIcon field="client"></p-sortIcon></th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-collaborateur>
@@ -58,7 +58,6 @@
             <td>{{ collaborateur.uc }}</td>
             <td>{{ collaborateur.email }}</td>
             <td>{{ collaborateur.client }}</td>
-            <td></td>
         </tr>
     </ng-template>
     <ng-template pTemplate="summary">
