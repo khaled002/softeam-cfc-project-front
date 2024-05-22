@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppLayoutModule } from './layout/app.layout.module';
 import { LocomotionComponent } from './formulaire/locomotion/locomotion.component';
+import { StatistiqueComponent } from './statistique/statistique.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { LocomotionComponent } from './formulaire/locomotion/locomotion.componen
     LoginComponent,
     DashboardComponent,
     LocomotionComponent,
+    StatistiqueComponent
   ],
   imports: [
     BrowserModule,

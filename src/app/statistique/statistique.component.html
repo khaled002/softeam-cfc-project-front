@@ -1,0 +1,71 @@
+<div class="mb-4 text-center">
+    <h1>Statistique de réponse au sondage</h1>
+</div>
+
+<div class="card flex justify-content-center">
+    <p-chart type="pie" [data]="data" [options]="options" />
+</div>
+
+<div class="mt-4">
+    <p-table #dt [value]="collabStatsAnswered" [rows]="5" [paginator]="true"
+     [tableStyle]="{ 'min-width': '75rem' }"
+    [rowHover]="true" dataKey="id"
+    currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} entrées" [showCurrentPageReport]="true">
+
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Nom </th>
+            <th>Prenom </th>
+            <th>Unité Commerciale</th>
+            <th>Email </th>
+            <th pSortableColumn="client">Client</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-collaborateur>
+        <tr>
+            <td>{{ collaborateur.nom }}</td>
+            <td>{{ collaborateur.prenom }}</td>
+            <td>{{ collaborateur.uniteCommerciale }}</td>
+            <td>{{ collaborateur.email }}</td>
+            <td></td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">En totalité il y a {{ collaborateurs ?
+            collaborateurs.length : 0 }} collaborateurs ayant répondu</div>
+    </ng-template>
+</p-table>
+</div>
+<div class="mt-4">
+<p-table #dt [value]="collabStatsDidNotAnswer" [rows]="5" [paginator]="true"
+     [tableStyle]="{ 'min-width': '75rem' }"
+    [rowHover]="true" dataKey="id"
+    currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} entrées" [showCurrentPageReport]="true">
+
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="Nom" style="min-width:15rem">Nom </th>
+            <th pSortableColumn="Prenom" style="min-width:15rem">Prenom </th>
+            <th pSortableColumn="uniteCommerciale">Unité Commerciale</th>
+            <th>Email </th>
+            <th>Client</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-collaborateur>
+        <tr>
+            <td>{{ collaborateur.nom }}</td>
+            <td>{{ collaborateur.prenom }}</td>
+            <td>{{ collaborateur.uniteCommerciale }}</td>
+            <td>{{ collaborateur.email }}</td>
+            <td></td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">En totalité il y a {{ collaborateurs ?
+            collaborateurs.length : 0 }} collaborateurs n'ayant pas répondu</div>
+    </ng-template>
+</p-table>
+</div>
+
+
+

@@ -42,8 +42,7 @@ import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
 import { AnimateModule } from 'primeng/animate';
 import { CardModule } from 'primeng/card';
 import { BlockUIModule } from 'primeng/blockui';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ChartModule } from 'primeng/chart';
 
 @NgModule({
    imports: [
@@ -88,7 +87,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     TooltipModule,
     TriStateCheckboxModule,
     AnimateModule,
-    CardModule
+    CardModule,
+    ChartModule
     ],
     exports: [
         AccordionModule,
@@ -132,7 +132,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         TooltipModule,
         TriStateCheckboxModule,
         AnimateModule,
-        CardModule
+        CardModule,
+        ChartModule
     ]
 })
 export class primeComponentsModule { }

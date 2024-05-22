@@ -17,18 +17,10 @@ export class MenuComponent {
         {
             label: 'Home',
             items: [
-                { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/softeam/carbon-foot-print/g8txk23fkijrg69rty28/dashbord'] },
-                // { label: 'Formulaire', icon: 'pi pi-fw pi-id-card', routerLink: ['/softeam/carbon-foot-print/form'] }
+                { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/softeam/carbon-foot-print/dashbord'] },
+                { label: 'statistique', icon: 'pi pi-fw pi-id-card', routerLink: ['/softeam/carbon-foot-print/statistique'] }
             ]
-        },
-        // {
-        //     label: 'UI Components',
-        //     items: [
-        //         { label: 'Input', icon: 'pi pi-fw pi-check-square', routerLink: ['/uikit/input'] },
-        //         { label: 'Float Label', icon: 'pi pi-fw pi-bookmark', routerLink: ['/uikit/floatlabel'] },
-        //        
-        //     ]
-        // }
+        }, 
       ];
     }
   }

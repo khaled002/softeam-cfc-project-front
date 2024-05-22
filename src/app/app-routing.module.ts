@@ -5,6 +5,7 @@ import { SubmitGuard } from './routeConfig/submitGuard';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FormulaireComponent } from './formulaire/formulaire.component';
 import { LayoutComponent } from './layout/layout.component';
+import { StatistiqueComponent } from './statistique/statistique.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -16,7 +17,8 @@ const routes: Routes = [
         path: '',
         component: LayoutComponent,
         children: [
-          { path: 'dashbord', component: DashboardComponent }
+          { path: 'dashbord', component: DashboardComponent },
+          { path: 'statistique', component: StatistiqueComponent }
         ]
       }
     ]

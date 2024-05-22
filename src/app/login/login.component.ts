@@ -20,7 +20,6 @@ export class LoginComponent {
     email: new FormControl('', [Validators.required, Validators.email, this.emailDomainValidator('softeam.fr')]),
   });
 
-
   emailDomainValidator(domainName: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const email = control.value;
@@ -31,7 +30,6 @@ export class LoginComponent {
       // Si l'email est valide ou le champ est vide, retourne null (pas d'erreur)
       return null;
     };
-
   }
 
   onSubmit() {

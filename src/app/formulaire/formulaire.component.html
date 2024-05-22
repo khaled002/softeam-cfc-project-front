@@ -93,7 +93,12 @@
     </p-card>
 </div>
 
-<p-dialog [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
-    <img src="../../assets/images/footprint.png" alt="footprint" class="img-centered">
-    <h3 class="text-center">Votre empreinte carbone est: </h3> <h3 class="text-center">{{footprintValue}} KG/CO2</h3>
+<p-dialog [modal]="true" [(visible)]="visible" [style]="{ width: '50rem', height: '50rem' }">
+    <img class="mb-4" src="../../assets/images/footprint.png" alt="footprint" class="img-centered">
+
+    <h1 class="text-center mb-4"> Merci pour votre participation</h1>
+    <p class="text-center">Votre empreinte carbone par jour de présence chez le client est: </p>
+    <p class="text-center"><span class="colored">{{footprintValue.empreinteParJourDePresence}}</span> KG/CO2</p>
+    <p class="text-center mt-4">Votre empreinte carbone total par semaine chez le client est: </p>
+    <p class="text-center"> <span class="colored">{{footprintValue.empreinteTotalParSemaine}}</span> KG/CO2 </p>
 </p-dialog>

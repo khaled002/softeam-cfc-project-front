@@ -23,7 +23,10 @@ export class FormulaireComponent {
   heatingTypes = Object.values(HeatingType).map((o :string)=> ({label: o, value: o}));
   locomotionsFields: any[] = [{}];
   locomotions : Locomotion[] = [];
- footprintValue: any;
+ footprintValue : any = {
+  empreinteTotalParSemaine: 0,
+  empreinteParJourDePresence:0
+ };
   quantity = [
     {label: "0", value: "0"},
     {label: "1", value: "1"},
@@ -63,6 +66,9 @@ export class FormulaireComponent {
   });
 
   onSubmit() {
+
+    this.collaborateurService.emitEvent();
+    console.log(this.carbonFootPrintForm.valid)
     if (this.carbonFootPrintForm.valid) {
       let formValue = {...this.carbonFootPrintForm?.value, locomotions: this.locomotions}
    

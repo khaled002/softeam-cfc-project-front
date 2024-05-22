@@ -1,15 +1,18 @@
-import { Component, EventEmitter, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MEANS_TRANSPORTATION } from '../../core/enums/Transportation';
+import { CollaborateurService } from '../../services/collaborateur.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'locomotion-form',
   templateUrl: './locomotion.component.html',
   styleUrl: './locomotion.component.scss'
 })
-export class LocomotionComponent {
+export class LocomotionComponent implements OnInit, OnDestroy {
 
   @Output() formChange = new EventEmitter<any>();
+  private eventSubscription: Subscription | null = null;
   TransportationOptions = MEANS_TRANSPORTATION;
   locomotionForm: FormGroup;
   meansOfTransportaion = [
@@ -36,8 +39,6 @@ export class LocomotionComponent {
     { label: "Essence", value: "Essence" },
     { label: "Hybride", value: "Hybride" }
   ]
-
-
   twoWheelerTypes = [
     { label: "", value: "" },
     { label: "Scooter thermique (diesel/essence)", value: "ScooterThermique" },
@@ -46,21 +47,34 @@ export class LocomotionComponent {
     { label: "Moto de plus de 250 cm3", value: "Plus250cm3" },
   ];
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private collaborateurService: CollaborateurService) {
     this.locomotionForm = this.fb.group({
       locomotion: ['', Validators.required],
       distance: ['', Validators.required],
       time: ['', Validators.required],
-      vehicleType: '',
-      twoWheelerType: '',
+      vehicleType: ['', Validators.required],
+      cartemplate: ['', Validators.required],
+      twoWheelerType: ['', Validators.required],
       carpooling: '',
-      vae: '',
-      cartemplate: ''
+      vae: ''
     });
 
     this.locomotionForm.valueChanges.subscribe(changes => {
       this.formChange.emit(changes)
     });
+  }
+
+  
+  ngOnInit() {
+    this.eventSubscription = this.collaborateurService.getEvent().subscribe(() => {
+      this.locomotionForm.markAllAsTouched();
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.eventSubscription) {
+      this.eventSubscription.unsubscribe();
+    }
   }
 
   onLocomotionChange() {
