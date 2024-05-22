@@ -25,14 +25,14 @@
         <tr>
             <td>{{ collaborateur.nom }}</td>
             <td>{{ collaborateur.prenom }}</td>
-            <td>{{ collaborateur.uniteCommerciale }}</td>
+            <td>{{ collaborateur.uc }}</td>
             <td>{{ collaborateur.email }}</td>
-            <td></td>
+            <td>{{ collaborateur.client }}</td>
         </tr>
     </ng-template>
     <ng-template pTemplate="summary">
-        <div class="flex align-items-center justify-content-between">En totalité il y a {{ collaborateurs ?
-            collaborateurs.length : 0 }} collaborateurs ayant répondu</div>
+        <div class="flex align-items-center justify-content-between">En totalité il y a {{ collabStatsAnswered ?
+            collabStatsAnswered.length : 0 }} collaborateur(s) ayant répondu</div>
     </ng-template>
 </p-table>
 </div>
@@ -44,9 +44,9 @@
 
     <ng-template pTemplate="header">
         <tr>
-            <th pSortableColumn="Nom" style="min-width:15rem">Nom </th>
-            <th pSortableColumn="Prenom" style="min-width:15rem">Prenom </th>
-            <th pSortableColumn="uniteCommerciale">Unité Commerciale</th>
+            <th>Nom </th>
+            <th>Prenom </th>
+            <th>Unité Commerciale</th>
             <th>Email </th>
             <th>Client</th>
         </tr>
@@ -55,14 +55,15 @@
         <tr>
             <td>{{ collaborateur.nom }}</td>
             <td>{{ collaborateur.prenom }}</td>
-            <td>{{ collaborateur.uniteCommerciale }}</td>
+            <td>{{ collaborateur.uc }}</td>
             <td>{{ collaborateur.email }}</td>
+            <td>{{ collaborateur.client }}</td>
             <td></td>
         </tr>
     </ng-template>
     <ng-template pTemplate="summary">
-        <div class="flex align-items-center justify-content-between">En totalité il y a {{ collaborateurs ?
-            collaborateurs.length : 0 }} collaborateurs n'ayant pas répondu</div>
+        <div class="flex align-items-center justify-content-between">En totalité il y a {{ collabStatsDidNotAnswer ?
+            collabStatsDidNotAnswer.length : 0 }} collaborateur(s) n'ayant pas répondu</div>
     </ng-template>
 </p-table>
 </div>

@@ -65,6 +65,10 @@ export class FormulaireComponent {
     phone: new FormControl(this.quantity[0], [Validators.required,Validators.min(0), Validators.max(5)])
   });
 
+  t(){
+    console.log("ffff")
+  }
+
   onSubmit() {
 
     this.collaborateurService.emitEvent();
