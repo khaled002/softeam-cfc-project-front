@@ -10,7 +10,7 @@
             </div>
             <div class="mb-2">
                 <label for="days-site" class="font-bold">Nombre de jours de présence sur site par semaine:</label>
-                <p-inputNumber id="days-site" mode="decimal" formControlName="presenceDays"
+                <p-inputNumber id="days-site" mode="decimal" formControlName="presenceDays" [min]="1" [max]="5"
                     [class.invalid]="presenceControl?.invalid && presenceControl?.touched"> </p-inputNumber>
             </div>
 

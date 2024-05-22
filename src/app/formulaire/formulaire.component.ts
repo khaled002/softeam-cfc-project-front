@@ -56,7 +56,7 @@ export class FormulaireComponent {
 
   carbonFootPrintForm = new FormGroup({
     client: new FormControl('',Validators.required),
-    presenceDays: new FormControl(0, [Validators.required,Validators.min(0), Validators.max(5)]),
+    presenceDays: new FormControl(1, [Validators.required,Validators.min(1), Validators.max(5)]),
     housingType: new FormControl('', Validators.required), 
     heatingType: new FormControl('',Validators.required),
     laptop: new FormControl(this.quantity[0], [Validators.required,Validators.min(0), Validators.max(5)]), // Exemple : this.quantity[0] à 5 laptops
