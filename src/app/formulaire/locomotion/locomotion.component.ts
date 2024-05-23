@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, FormGroup, RequiredValidator, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MEANS_TRANSPORTATION } from '../../core/enums/Transportation';
 
 @Component({
@@ -46,9 +46,9 @@ export class LocomotionComponent {
 
   constructor(private fb: FormBuilder) {
     this.locomotionForm = this.fb.group({
-      locomotion: ['',Validators.required],
-      distance: ['',[Validators.required,Validators.min(1), Validators.max(100)]],
-      time: ['',[Validators.required,Validators.min(1), Validators.max(180)]],
+      locomotion: ['', Validators.required],
+      distance: ['', [Validators.required, Validators.min(1), Validators.max(100)]],
+      time: ['', [Validators.required, Validators.min(1), Validators.max(180)]],
       vehicleType: [''],
       cartemplate: [''],
       twoWheelerType: [''],
@@ -59,15 +59,67 @@ export class LocomotionComponent {
     this.locomotionForm.valueChanges.subscribe(changes => {
       this.formChange.emit(changes)
     });
+
   }
 
-  get locomotionControl()  { return this.locomotionForm.get('locomotion')?.value; }
-  get vae()  { return this.locomotionForm.get('vae')?.value; }
+
+  onLocomotionChange() {
+
+    const locomotion = this.locomotionControl.value;
+
+    this._distance.setValue(0);
+    this._time.setValue(0);
+    this.locomotionForm.clearValidators();
+    this.locomotionForm.markAsPristine();
+    this.locomotionForm.markAsUntouched();
+    this.locomotionForm.updateValueAndValidity();
+
+    if (locomotion === MEANS_TRANSPORTATION.BUS || locomotion === MEANS_TRANSPORTATION.METRO || locomotion === MEANS_TRANSPORTATION.SCOOTER) {
+      this._distance.setValidators([Validators.required, Validators.min(1), Validators.max(100)]);
+      this._time.setValidators([Validators.required, Validators.min(1), Validators.max(180)]);
+
+      this._distance.updateValueAndValidity();
+      this._time.updateValueAndValidity();
+    }
+
+    if (locomotion === MEANS_TRANSPORTATION.BIKE && this.vae) {
+      this._distance.setValidators([Validators.required, Validators.min(1), Validators.max(100)]);
+      this._time.setValidators([Validators.required, Validators.min(1), Validators.max(180)]);
+
+      this._distance.updateValueAndValidity();
+      this._time.updateValueAndValidity();
+    }
+
+    if (locomotion === MEANS_TRANSPORTATION.CAR) {
+      this._distance.setValidators([Validators.required, Validators.min(1), Validators.max(100)]);
+      this._time.setValidators([Validators.required, Validators.min(1), Validators.max(180)]);
+      this._cartemplate.setValidators(Validators.required);
+      this._vehicleType.setValidators(Validators.required);
+
+      this._distance.updateValueAndValidity();
+      this._time.updateValueAndValidity();
+      this._cartemplate.updateValueAndValidity();
+      this._vehicleType.updateValueAndValidity();
+    }
+
+    if (locomotion === MEANS_TRANSPORTATION.MOTORIZED) {
+      this._distance.setValidators([Validators.required, Validators.min(1), Validators.max(100)]);
+      this._time.setValidators([Validators.required, Validators.min(1), Validators.max(180)]);
+      this._twoWheelerType.setValidators(Validators.required);
+
+      this._distance.updateValueAndValidity();
+      this._time.updateValueAndValidity();
+      this._twoWheelerType.updateValueAndValidity();
+    }
+  }
+
+  get locomotionControl() { return this.locomotionForm.get('locomotion')?.value; }
+  get vae() { return this.locomotionForm.get('vae')?.value; }
   get _vae() { return this.locomotionForm.get('vae')! }
-  get _distance() { return this.locomotionForm.get('distance') }
+  get _distance() { return this.locomotionForm.get('distance')! }
   get _time() { return this.locomotionForm.get('time')! }
-  get _cartemplate(){ return this.locomotionForm.get('cartemplate')! }
+  get _cartemplate() { return this.locomotionForm.get('cartemplate')! }
   get _vehicleType() { return this.locomotionForm.get('vehicleType')! }
   get _twoWheelerType() { return this.locomotionForm.get('twoWheelerType')! }
-  
+
 }

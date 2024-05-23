@@ -3,7 +3,7 @@
     <form [formGroup]="locomotionForm">
         <div>
             <label for="transport" class="font-bold mr-2">Moyen de transport pour aller sur site:</label>
-            <p-dropdown id="transport" name="transport" formControlName="locomotion"
+            <p-dropdown id="transport" name="transport" formControlName="locomotion" (onChange)="onLocomotionChange()"
                 [options]="meansOfTransportaion" optionLabel="label"
                 placeholder="Selectionner un mode de transport"></p-dropdown>
         </div>

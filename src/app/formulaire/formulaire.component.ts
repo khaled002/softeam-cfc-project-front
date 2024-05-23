@@ -87,7 +87,7 @@ export class FormulaireComponent {
         }
       });
     }
-
+    
   }
 
   addNewLocomotionField() {
