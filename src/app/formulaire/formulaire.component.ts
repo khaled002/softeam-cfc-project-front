@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ClientService } from '../services/client.service';
@@ -8,6 +8,7 @@ import { startWith } from 'rxjs/internal/operators/startWith';
 import { map } from 'rxjs/internal/operators/map';
 import { HeatingType } from '../core/enums/HeatingType';
 import { Locomotion } from '../domain/Locomotion';
+import { LocomotionComponent } from './locomotion/locomotion.component';
 
 @Component({
   selector: 'app-formulaire',
@@ -34,6 +35,7 @@ export class FormulaireComponent {
   ]
 
   visible: boolean = false;
+  @ViewChild(LocomotionComponent) locomotionComponent!: LocomotionComponent;
 
   constructor(private router: Router, private collaborateurService: CollaborateurService, private clientService: ClientService) { }
 
@@ -69,8 +71,9 @@ export class FormulaireComponent {
 
   onSubmit() {
 
-    this.collaborateurService.emitEvent();
-    if (this.carbonFootPrintForm.valid) {
+    this.carbonFootPrintForm.markAllAsTouched();
+    this.locomotionComponent.locomotionForm.markAllAsTouched();
+    if (this.carbonFootPrintForm.valid && this.locomotionComponent.locomotionForm.valid) {
       let formValue = { ...this.carbonFootPrintForm?.value, locomotions: this.locomotions }
 
       let adapted = adaptFormValue(formValue);
@@ -83,8 +86,6 @@ export class FormulaireComponent {
         error: (error) => {
         }
       });
-    } else {
-      this.carbonFootPrintForm.markAllAsTouched();
     }
 
   }

@@ -1,18 +1,15 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { FormBuilder, FormGroup, RequiredValidator, Validators } from '@angular/forms';
 import { MEANS_TRANSPORTATION } from '../../core/enums/Transportation';
-import { CollaborateurService } from '../../services/collaborateur.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'locomotion-form',
   templateUrl: './locomotion.component.html',
   styleUrl: './locomotion.component.scss'
 })
-export class LocomotionComponent implements OnInit, OnDestroy {
+export class LocomotionComponent {
 
   @Output() formChange = new EventEmitter<any>();
-  private eventSubscription: Subscription | null = null;
   TransportationOptions = MEANS_TRANSPORTATION;
   locomotionForm: FormGroup;
   meansOfTransportaion = [
@@ -47,14 +44,14 @@ export class LocomotionComponent implements OnInit, OnDestroy {
     { label: "Moto de plus de 250 cm3", value: "Plus250cm3" },
   ];
 
-  constructor(private fb: FormBuilder, private collaborateurService: CollaborateurService) {
+  constructor(private fb: FormBuilder) {
     this.locomotionForm = this.fb.group({
-      locomotion: ['', Validators.required],
-      distance: ['', Validators.required],
-      time: ['', Validators.required],
-      vehicleType: ['', Validators.required],
-      cartemplate: ['', Validators.required],
-      twoWheelerType: ['', Validators.required],
+      locomotion: ['',Validators.required],
+      distance: ['',[Validators.required,Validators.min(1), Validators.max(100)]],
+      time: ['',[Validators.required,Validators.min(1), Validators.max(180)]],
+      vehicleType: [''],
+      cartemplate: [''],
+      twoWheelerType: [''],
       carpooling: '',
       vae: ''
     });
@@ -64,45 +61,13 @@ export class LocomotionComponent implements OnInit, OnDestroy {
     });
   }
 
-
-  ngOnInit() {
-    this.eventSubscription = this.collaborateurService.getEvent().subscribe(() => {
-      this.locomotionForm.markAllAsTouched();
-    });
-  }
-
-  ngOnDestroy() {
-    if (this.eventSubscription) {
-      this.eventSubscription.unsubscribe();
-    }
-  }
-
-  onLocomotionChange() {
-
-    const locomotion = this.locomotionForm.get('locomotion')?.value;
-    const vehicleTypeControl = this.locomotionForm.get('vehicleType');
-    const carpoolingControl = this.locomotionForm.get('carpooling');
-    const twoWheelerControl = this.locomotionForm.get('twoWheelerType');
-
-    // Reset validators
-    vehicleTypeControl?.clearValidators();
-    carpoolingControl?.clearValidators();
-    twoWheelerControl?.clearValidators();
-
-    if (locomotion === MEANS_TRANSPORTATION.CAR) {
-      vehicleTypeControl?.setValidators(Validators.required);
-      carpoolingControl?.setValidators(Validators.required);
-    } else if (locomotion === MEANS_TRANSPORTATION.MOTORIZED) {
-      twoWheelerControl?.setValidators(Validators.required);
-    }
-
-    // Update value and validity
-    vehicleTypeControl?.updateValueAndValidity();
-    carpoolingControl?.updateValueAndValidity();
-    twoWheelerControl?.updateValueAndValidity();
-  }
-
-
-  get locomotionControl() { return this.locomotionForm.get('locomotion')?.value; }
-  get vae() { return this.locomotionForm.get('vae')?.value; }
+  get locomotionControl()  { return this.locomotionForm.get('locomotion')?.value; }
+  get vae()  { return this.locomotionForm.get('vae')?.value; }
+  get _vae() { return this.locomotionForm.get('vae')! }
+  get _distance() { return this.locomotionForm.get('distance') }
+  get _time() { return this.locomotionForm.get('time')! }
+  get _cartemplate(){ return this.locomotionForm.get('cartemplate')! }
+  get _vehicleType() { return this.locomotionForm.get('vehicleType')! }
+  get _twoWheelerType() { return this.locomotionForm.get('twoWheelerType')! }
+  
 }

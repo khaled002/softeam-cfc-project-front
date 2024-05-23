@@ -3,7 +3,7 @@
     <form [formGroup]="locomotionForm">
         <div>
             <label for="transport" class="font-bold mr-2">Moyen de transport pour aller sur site:</label>
-            <p-dropdown id="transport" name="transport" formControlName="locomotion" (change)="onLocomotionChange()"
+            <p-dropdown id="transport" name="transport" formControlName="locomotion"
                 [options]="meansOfTransportaion" optionLabel="label"
                 placeholder="Selectionner un mode de transport"></p-dropdown>
         </div>
@@ -14,16 +14,19 @@
             <div class="p-field p-grid">
                 <label for="distance" class="p-col-12 p-md-2 p-mr-2 font-bold">Distance parcourue en KM:</label>
                 <div class="p-col-12 p-md-9">
-                    <p-inputNumber id="distance" name="distance" formControlName="distance"></p-inputNumber>
+                    <p-inputNumber id="distance" name="distance" formControlName="distance" [max]="100"></p-inputNumber>
                 </div>
             </div>
             <div class="p-field p-grid">
                 <label for="time" class="p-col-12 p-md-2 p-mr-2 font-bold">Le temps passé en minutes:</label>
                 <div class="p-col-12 p-md-9">
-                    <p-inputNumber id="time" name="time" formControlName="time"></p-inputNumber>
+                    <p-inputNumber id="time" name="time" formControlName="time" [max]="180"></p-inputNumber>
                 </div>
             </div>
         </div>
+
+        <p class="red" *ngIf="_distance?.touched && _distance?.invalid">La distance parcourue doit être comprise entre 1 et 100 KM </p>
+        <p class="red" *ngIf="_time?.touched && _time?.invalid">Le temps passé doit être compris entre 1 et 180 minutes </p>
 
         }
         @case (TransportationOptions.METRO) {
@@ -31,16 +34,19 @@
             <div class="p-field p-grid">
                 <label for="distance" class="p-col-12 p-md-2 p-mr-2 font-bold">Distance parcourue en KM:</label>
                 <div class="p-col-12 p-md-9">
-                    <p-inputNumber id="distance" name="distance" formControlName="distance"></p-inputNumber>
+                    <p-inputNumber id="distance" name="distance" formControlName="distance" [max]="100"></p-inputNumber>
                 </div>
             </div>
             <div class="p-field p-grid">
                 <label for="time" class="p-col-12 p-md-2 p-mr-2 font-bold">Le temps passé en minutes:</label>
                 <div class="p-col-12 p-md-9">
-                    <p-inputNumber id="time" name="time" formControlName="time"></p-inputNumber>
+                    <p-inputNumber id="time" name="time" formControlName="time" [max]="180"></p-inputNumber>
                 </div>
             </div>
         </div>
+
+        <p class="red" *ngIf="_distance?.touched && _distance?.invalid">La distance parcourue doit être comprise entre 1 et 100 KM </p>
+        <p class="red" *ngIf="_time?.touched && _time?.invalid">Le temps passé doit être compris entre 1 et 180 minutes </p>
 
         }
         @case (TransportationOptions.SCOOTER) {
@@ -48,16 +54,20 @@
             <div class="p-field p-grid">
                 <label for="distance" class="p-col-12 p-md-2 font-bold p-mr-2">Distance parcourue en KM:</label>
                 <div class="p-col-12 p-md-9">
-                    <p-inputNumber id="distance" name="distance" formControlName="distance"></p-inputNumber>
+                    <p-inputNumber id="distance" name="distance" formControlName="distance" [max]="100"></p-inputNumber>
                 </div>
             </div>
             <div class="p-field p-grid">
                 <label for="time" class="p-col-12 p-md-2 font-bold p-mr-2">Le temps passé en minutes:</label>
                 <div class="p-col-12 p-md-9">
-                    <p-inputNumber id="time" name="time" formControlName="time"></p-inputNumber>
+                    <p-inputNumber id="time" name="time" formControlName="time" [max]="180"></p-inputNumber>
                 </div>
             </div>
         </div>
+
+        <p class="red" *ngIf="_distance?.touched && _distance?.invalid">La distance parcourue doit être comprise entre 1 et 100 KM </p>
+        <p class="red" *ngIf="_time?.touched && _time?.invalid">Le temps passé doit être compris entre 1 et 180 minutes </p>
+
 
         }
 
@@ -74,13 +84,13 @@
             <div class="p-field p-grid">
                 <label for="distance" class="p-col-12 p-md-3 font-bold p-mr-2">Distance parcourue en KM:</label>
                 <div class="p-col-12 p-md-8">
-                    <p-inputNumber id="distance" name="distance" formControlName="distance"></p-inputNumber>
+                    <p-inputNumber id="distance" name="distance" formControlName="distance" [max]="100"></p-inputNumber>
                 </div>
             </div>
             <div class="p-field p-grid">
                 <label for="time" class="p-col-12 p-md-3 font-bold p-mr-2">Le temps passé en minutes:</label>
                 <div class="p-col-12 p-md-8">
-                    <p-inputNumber id="time" name="time" formControlName="time"></p-inputNumber>
+                    <p-inputNumber id="time" name="time" formControlName="time" [max]="180"></p-inputNumber>
                 </div>
             </div>
             }
@@ -93,13 +103,13 @@
             <div class="p-field p-grid">
                 <label for="distance" class="p-col-12 p-md-2 p-mr-2">Distance parcourue en KM:</label>
                 <div class="p-col-12 p-md-9">
-                    <p-inputNumber id="distance" name="distance" formControlName="distance"></p-inputNumber>
+                    <p-inputNumber id="distance" name="distance" formControlName="distance" [max]="100"></p-inputNumber>
                 </div>
             </div>
             <div class="p-field p-grid">
                 <label for="time" class="p-col-12 p-md-2 p-mr-2">Le temps passé en h:</label>
                 <div class="p-col-12 p-md-9">
-                    <p-inputNumber id="time" name="time" formControlName="time"></p-inputNumber>
+                    <p-inputNumber id="time" name="time" formControlName="time" [max]="180"></p-inputNumber>
                 </div>
             </div>
             <div class="p-field p-grid">
@@ -127,28 +137,27 @@
         }
 
         @case (TransportationOptions.MOTORIZED) {
-            <div class="p-fluid">
-                <div class="p-field p-grid">
-                  <label for="distance" class="p-col-12 p-md-3 font-bold p-mr-2">Distance parcourue en KM:</label>
-                  <div class="p-col-12 p-md-8">
-                    <p-inputNumber id="distance" name="distance" formControlName="distance"></p-inputNumber>
-                  </div>
+        <div class="p-fluid">
+            <div class="p-field p-grid">
+                <label for="distance" class="p-col-12 p-md-3 font-bold p-mr-2">Distance parcourue en KM:</label>
+                <div class="p-col-12 p-md-8">
+                    <p-inputNumber id="distance" name="distance" formControlName="distance" [max]="100"></p-inputNumber>
                 </div>
-                <div class="p-field p-grid">
-                  <label for="time" class="p-col-12 p-md-3 font-bold p-mr-2">Le temps passé en h:</label>
-                  <div class="p-col-12 p-md-8">
-                    <p-inputNumber id="time" name="time" formControlName="time"></p-inputNumber>
-                  </div>
+            </div>
+            <div class="p-field p-grid">
+                <label for="time" class="p-col-12 p-md-3 font-bold p-mr-2">Le temps passé en h:</label>
+                <div class="p-col-12 p-md-8">
+                    <p-inputNumber id="time" name="time" formControlName="time" [max]="180"></p-inputNumber>
                 </div>
-                <div class="p-field p-grid">
-                  <label for="twoWheeler" class="p-col-12 p-md-3 font-bold p-mr-2">Type des deux-roues motorisé:</label>
-                  <div class="p-col-12 p-md-8">
+            </div>
+            <div class="p-field p-grid">
+                <label for="twoWheeler" class="p-col-12 p-md-3 font-bold p-mr-2">Type des deux-roues motorisé:</label>
+                <div class="p-col-12 p-md-8">
                     <p-dropdown id="twoWheeler" name="twoWheeler" formControlName="twoWheelerType"
-                      [options]="twoWheelerTypes" optionLabel="label" placeholder="Selectionner le type"></p-dropdown>
-                  </div>
+                        [options]="twoWheelerTypes" optionLabel="label" placeholder="Selectionner le type"></p-dropdown>
                 </div>
-              </div>
-
+            </div>
+        </div>
         }
         }
     </form>
